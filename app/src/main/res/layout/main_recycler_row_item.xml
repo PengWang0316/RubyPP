@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingTop="15dp"
     android:paddingBottom="15dp">
+    <!--android:background="@drawable/recycler_layout_border"-->
 
     <TextView
         android:layout_width="wrap_content"
@@ -24,7 +26,8 @@
         android:layout_marginRight="2.5dp"
         android:layout_marginEnd="2.5dp"
         android:contentDescription="@string/picture_peed"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:src="@drawable/peed_16"/>
 
     <ImageView
         android:layout_width="wrap_content"
@@ -35,7 +38,8 @@
         android:layout_marginRight="2.5dp"
         android:layout_marginEnd="2.5dp"
         android:contentDescription="@string/picture_pooped"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:src="@drawable/pooped_16" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -44,7 +48,8 @@
         android:layout_marginLeft="2.5dp"
         android:layout_marginStart="2.5dp"
         android:contentDescription="@string/picture_ate"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:src="@drawable/ate_16"/>
 
     <TextView
         android:layout_width="match_parent"
