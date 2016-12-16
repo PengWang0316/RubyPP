@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">RubyPP</string>
+
+    <!--For recycler view's item-->
+    <string name="picture_peed">Peed</string>
+    <string name="picture_pooped">Pooped</string>
+    <string name="picture_ate">Ate</string>
 </resources>
