@@ -18,6 +18,7 @@ import java.util.ArrayList;
  */
 
 public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerViewAdapter.RecordHolder> {
+    private static final String TAG = "MainRecyclerViewAdapter";
     private ArrayList<Record> recordArrayList;
 
     public MainRecyclerViewAdapter(ArrayList<Record> recordArrayList){
@@ -33,6 +34,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
 
     @Override
     public void onBindViewHolder(MainRecyclerViewAdapter.RecordHolder holder, int position) {
+        //Log.d(TAG, "-----------Adapter onBindViewHoler--------------");
         holder.bindData(recordArrayList.get(position));
     }
 

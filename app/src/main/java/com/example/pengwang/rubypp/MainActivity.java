@@ -75,5 +75,9 @@ public class MainActivity extends AppCompatActivity {
             recordArrayList.add(r4);
         }
         recordArrayList.add(r3);
+
+        //Set the position of view to the end
+        Log.d(TAG, "----------------------size:"+recordArrayList.size()+"-----------------------------");
+        mainRecyclerView.scrollToPosition(recordArrayList.size()-1);
     }
 }
