@@ -50,6 +50,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
     public static class RecordHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private final static String TAG = "recyclerview.viewholder";
         private TextView timeView;
+        private TextView spouseTimeView;
         private ImageView peedView;
         private ImageView poopedView;
         private ImageView ateView;
@@ -64,6 +65,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
             poopedView=(ImageView)itemView.findViewById(R.id.main_recycler_row_pooped);
             ateView=(ImageView)itemView.findViewById(R.id.main_recycler_row_ate);
             dateView=(TextView)itemView.findViewById(R.id.main_recycler_row_date);
+            spouseTimeView=(TextView)itemView.findViewById(R.id.main_recycler_row_spouse_time);
 
             //Setting up the click listener
             itemView.setOnClickListener(this);
@@ -71,8 +73,18 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
 
         @Override
         public void onClick(View view) {
-            if(view.getTag()==FUTURE_VIEW_OBJECT) Log.d(TAG, "-------------------Future View was clicked--------------------------");
+            if(view.getTag()==FUTURE_VIEW_OBJECT) addNewReord(view);
             else Log.d(TAG, "-------------------Record View was clicked--------------------------");
+        }
+
+        /********
+         * delete current view and add a new view to the recycler view
+         * Update the database simultaneity
+         * @param view the current view that was clicked
+         */
+        private void addNewReord(View view) {
+            String spouseTime=((TextView)view.findViewById(R.id.main_recycler_row_spouse_time)).getText().toString();
+            Log.d(TAG,"----------------Spouse time: "+spouseTime+" ----------------");
         }
 
         /**********************************************
@@ -84,6 +96,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
             //Binding the data
             timeView.setText(record.getTime());
             dateView.setText(record.getDate());
+            spouseTimeView.setText(record.getSpouseTime());
             //Judging whether show icons
             if (record.isPeed()) peedView.setVisibility(View.VISIBLE);
             else peedView.setVisibility(View.INVISIBLE);
