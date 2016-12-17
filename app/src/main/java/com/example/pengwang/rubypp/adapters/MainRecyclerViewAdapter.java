@@ -15,10 +15,11 @@ import java.util.ArrayList;
 
 /**
  * Created by Peng on 12/15/2016.
+ * The adapter and View holder for main recycler view.
  */
 
 public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerViewAdapter.RecordHolder> {
-    private static final String TAG = "MainRecyclerViewAdapter";
+    //private static final String TAG = "MainRecyclerViewAdapter";
     private ArrayList<Record> recordArrayList;
 
     public MainRecyclerViewAdapter(ArrayList<Record> recordArrayList){
@@ -74,9 +75,9 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
         /**********************************************
          * Should do some recognizes for different situations such as it si a record or others
          * also may need to change listener
-         * @param record
+         * @param record the record that need to be binded
          */
-        public void bindData(Record record) {
+        private void bindData(Record record) {
             timeView.setText(record.getTime());
             dateView.setText(record.getDate());
             //Judging whether show icons

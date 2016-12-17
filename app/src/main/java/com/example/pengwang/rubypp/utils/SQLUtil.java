@@ -6,10 +6,10 @@ import com.example.pengwang.rubypp.dao.Record;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 
 /**
- * Created by Lydia on 12/16/2016.
+ * Created by Peng on 12/16/2016.
+ * Util class that will be used to get data from database.
  */
 public class SQLUtil {
     private final static int NUMBER_OF_ITEM_FOR_FUTURE=4;
@@ -23,7 +23,7 @@ public class SQLUtil {
     }
 
     private static ArrayList<Record> getFutureRecords(Record lastRecord) {
-        ArrayList<Record> recordsList= new ArrayList<Record>(NUMBER_OF_ITEM_FOR_FUTURE);
+        ArrayList<Record> recordsList= new ArrayList<>(NUMBER_OF_ITEM_FOR_FUTURE);
         for(int i=0;i<4;i++){
             Record newRecord=new Record(lastRecord);
             recordsList.add(newRecord);
@@ -34,7 +34,7 @@ public class SQLUtil {
     }
 
     private static Collection<? extends Record> getRecordsFromDatabase() {
-        ArrayList<Record> recordArrayList=new ArrayList<Record>();
+        ArrayList<Record> recordArrayList=new ArrayList<>();
         Record r1=new Record();
         Record r2=new Record();
         Record r3=new Record();

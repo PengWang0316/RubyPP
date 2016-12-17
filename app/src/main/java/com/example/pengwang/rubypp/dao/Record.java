@@ -10,8 +10,10 @@ import java.util.HashMap;
 
 /**
  * Created by Peng on 12/15/2016.
+ * Rcord data
  */
 public class Record {
+    private static final String DATA_FORMAT = "MM/dd/yyyy";
     private String time="";
     private boolean isPeed=false;
     private boolean isPooped=false;
@@ -41,15 +43,15 @@ public class Record {
 
     /******
      * setting up for future item record
-     * @param lastRecord
+     * @param lastRecord the last record
      */
     public Record(Record lastRecord){
         String spouseTime=SPOUSE_TIME_KEY_MAP.get(lastRecord.getSpouseTime());
         setSpouseTime(spouseTime);
         setTime(spouseTime);
-        if (spouseTime==SIX_OCLOCK){
+        if (spouseTime.equals(SIX_OCLOCK)){
             //set a new day
-            SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+            SimpleDateFormat format = new SimpleDateFormat(DATA_FORMAT);
             try {
                 Date date = format.parse(lastRecord.getDate());
                 Calendar calendar=Calendar.getInstance();
