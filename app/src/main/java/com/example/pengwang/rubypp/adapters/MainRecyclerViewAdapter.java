@@ -19,6 +19,8 @@ import java.util.ArrayList;
  */
 
 public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerViewAdapter.RecordHolder> {
+    private static final int VIEW_TAG_KEY = 1;
+    private static final String FUTURE_VIEW_OBJECT = "futureView";
     //private static final String TAG = "MainRecyclerViewAdapter";
     private ArrayList<Record> recordArrayList;
 
@@ -36,7 +38,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
     @Override
     public void onBindViewHolder(MainRecyclerViewAdapter.RecordHolder holder, int position) {
         //Log.d(TAG, "-----------Adapter onBindViewHoler--------------");
-        holder.bindData(recordArrayList.get(position));
+        holder.bindData(recordArrayList.get(position),holder.itemView);
     }
 
     @Override
@@ -69,7 +71,8 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
 
         @Override
         public void onClick(View view) {
-            Log.d(TAG, "-------------------Recycler item was clicked--------------------------");
+            if(view.getTag()==FUTURE_VIEW_OBJECT) Log.d(TAG, "-------------------Future View was clicked--------------------------");
+            else Log.d(TAG, "-------------------Record View was clicked--------------------------");
         }
 
         /**********************************************
@@ -77,7 +80,8 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
          * also may need to change listener
          * @param record the record that need to be binded
          */
-        private void bindData(Record record) {
+        private void bindData(Record record,View view) {
+            //Binding the data
             timeView.setText(record.getTime());
             dateView.setText(record.getDate());
             //Judging whether show icons
@@ -87,6 +91,9 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
             else poopedView.setVisibility(View.INVISIBLE);
             if(record.isAte()) ateView.setVisibility(View.VISIBLE);
             else ateView.setVisibility(View.INVISIBLE);
+
+            //Add a tag to future view in order to use in onClickListener
+            if(!record.isRecord()) view.setTag(FUTURE_VIEW_OBJECT);
         }
     }
 }

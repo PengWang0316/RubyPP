@@ -13,13 +13,16 @@ import java.util.HashMap;
  * Rcord data
  */
 public class Record {
-    private static final String DATA_FORMAT = "MM/dd/yyyy";
+
     private String time="";
     private boolean isPeed=false;
     private boolean isPooped=false;
     private boolean isAte=false;
     private String date="";
     private String spouseTime="";
+    private boolean isRecord=true;
+
+    private static final String DATA_FORMAT = "MM/dd/yyyy";
     public final static String SIX_OCLOCK="06:00";
     public final static String SEVEN_OCLOCK="07:00";
     public final static String ELEVEN_OCLOCK="11:00";
@@ -49,6 +52,7 @@ public class Record {
         String spouseTime=SPOUSE_TIME_KEY_MAP.get(lastRecord.getSpouseTime());
         setSpouseTime(spouseTime);
         setTime(spouseTime);
+        setRecord(false);
         if (spouseTime.equals(SIX_OCLOCK)){
             //set a new day
             SimpleDateFormat format = new SimpleDateFormat(DATA_FORMAT);
@@ -111,5 +115,13 @@ public class Record {
 
     public void setSpouseTime(String spouseTime) {
         this.spouseTime = spouseTime;
+    }
+
+    public boolean isRecord() {
+        return isRecord;
+    }
+
+    public void setRecord(boolean record) {
+        isRecord = record;
     }
 }
