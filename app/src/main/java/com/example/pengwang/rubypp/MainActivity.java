@@ -10,14 +10,18 @@ import android.util.Log;
 
 import com.example.pengwang.rubypp.adapters.MainRecyclerViewAdapter;
 import com.example.pengwang.rubypp.dao.Record;
+import com.example.pengwang.rubypp.utils.SQLUtil;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
     private final static String TAG = "MainActivity";
     private RecyclerView mainRecyclerView;
     private LinearLayoutManager mainLinerLayoutManager;
     private ArrayList<Record> recordArrayList = new ArrayList<Record>();
+
+    //private final static String[] TEXTS_OF_TIME_VIEW={"05:00","07:00","11:00","14:00","17:00","20:00","23:00"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,45 +43,30 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if(recordArrayList.size()==0) getRecords();
+        if(recordArrayList.size()==0) SQLUtil.getInitialRecordsFromDatabase(mainRecyclerView,recordArrayList);
     }
 
     /**************************
      * Use to get data from database
-     */
-    private void getRecords() {
+
+    private void getInitialRecords() {
         Log.d(TAG, "------------------Get Records-----------------------");
-
-        Record r1=new Record();
-        Record r2=new Record();
-        Record r3=new Record();
-        r1.setTime("5 AM");
-        r1.setPeed(true);
-        r1.setDate("March 12 2016");
-        r2.setTime("7 AM");
-        r2.setPooped(true);
-        r2.setAte(true);
-        r2.setDate("March 12 2016");
-        r3.setTime("11 AM");
-        r3.setPeed(true);
-        r3.setDate("March 12 2016");
-        recordArrayList.add(r1);
-        recordArrayList.add(r2);
-
-
-        for (int i=0;i<50;i++){
-            Record r4=new Record();
-            r4.setTime("5 AM");
-            r4.setPeed(true);
-            r4.setPooped(true);
-            r4.setAte(true);
-            r4.setDate("March 12 2016");
-            recordArrayList.add(r4);
-        }
-        recordArrayList.add(r3);
+        recordArrayList.addAll(SQLUtil.getInitialRecordsFromDatabase());
 
         //Set the position of view to the end
         Log.d(TAG, "----------------------size:"+recordArrayList.size()+"-----------------------------");
         mainRecyclerView.scrollToPosition(recordArrayList.size()-1);
     }
+
+    ***************
+     * Get some record for the future records
+     * Use the current time to calculate the value for time view
+     *
+
+    private ArrayList<Record> getFutureRecords() {
+        ArrayList<Record> recordsList= new ArrayList<Record>(NUMBER_OF_ITEM_FOR_FUTURE);
+
+
+        return recordsList;
+    }*/
 }
