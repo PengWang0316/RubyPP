@@ -1,5 +1,8 @@
 package com.example.pengwang.rubypp.adapters;
 
+import android.app.Activity;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.pengwang.rubypp.Fragments.AddRecordDialogFragment;
 import com.example.pengwang.rubypp.R;
 import com.example.pengwang.rubypp.dao.Record;
 
@@ -38,7 +42,9 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
     @Override
     public void onBindViewHolder(MainRecyclerViewAdapter.RecordHolder holder, int position) {
         //Log.d(TAG, "-----------Adapter onBindViewHoler--------------");
-        holder.bindData(recordArrayList.get(position),holder.itemView);
+        holder.bindData(recordArrayList.get(position),holder.itemView, position);
+        holder.setRecordArryList(recordArrayList);
+        holder.setAdapter(this);
     }
 
     @Override
@@ -50,11 +56,14 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
     public static class RecordHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private final static String TAG = "recyclerview.viewholder";
         private TextView timeView;
-        private TextView spouseTimeView;
+        private TextView indexView;
         private ImageView peedView;
         private ImageView poopedView;
         private ImageView ateView;
         private TextView dateView;
+
+        private ArrayList<Record> recordArrayList;
+        private RecyclerView.Adapter adapter;
 
         public RecordHolder(View itemView) {
             super(itemView);
@@ -65,7 +74,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
             poopedView=(ImageView)itemView.findViewById(R.id.main_recycler_row_pooped);
             ateView=(ImageView)itemView.findViewById(R.id.main_recycler_row_ate);
             dateView=(TextView)itemView.findViewById(R.id.main_recycler_row_date);
-            spouseTimeView=(TextView)itemView.findViewById(R.id.main_recycler_row_spouse_time);
+            indexView=(TextView)itemView.findViewById(R.id.main_recycler_row_index);
 
             //Setting up the click listener
             itemView.setOnClickListener(this);
@@ -73,7 +82,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
 
         @Override
         public void onClick(View view) {
-            if(view.getTag()==FUTURE_VIEW_OBJECT) addNewReord(view);
+            if(view.getTag()==FUTURE_VIEW_OBJECT) addNewRecord(view);
             else Log.d(TAG, "-------------------Record View was clicked--------------------------");
         }
 
@@ -82,9 +91,19 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
          * Update the database simultaneity
          * @param view the current view that was clicked
          */
-        private void addNewReord(View view) {
-            String spouseTime=((TextView)view.findViewById(R.id.main_recycler_row_spouse_time)).getText().toString();
-            Log.d(TAG,"----------------Spouse time: "+spouseTime+" ----------------");
+        private void addNewRecord(View view) {
+            int index=Integer.parseInt(((TextView)view.findViewById(R.id.main_recycler_row_index)).getText().toString());
+            AddRecordDialogFragment dialogFragment=new AddRecordDialogFragment();
+            dialogFragment.setHolder(this);
+            dialogFragment.setRecord(recordArrayList.get(index));
+            dialogFragment.setIndex(index);
+            new AddRecordDialogFragment().show(((AppCompatActivity)view.getContext()).getSupportFragmentManager(),"UpdateDialogTag");
+            Log.d(TAG,"----------------Adding a new record----------------");
+        }
+
+        public void callBackAddNewRecord(int index){
+            Log.d(TAG,"----------------callBackAddNewRecord----------------");
+            adapter.notifyItemChanged(index);
         }
 
         /**********************************************
@@ -92,11 +111,11 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
          * also may need to change listener
          * @param record the record that need to be binded
          */
-        private void bindData(Record record,View view) {
+        private void bindData(Record record,View view,int position) {
             //Binding the data
             timeView.setText(record.getTime());
             dateView.setText(record.getDate());
-            spouseTimeView.setText(record.getSpouseTime());
+            indexView.setText(String.valueOf(position));
             //Judging whether show icons
             if (record.isPeed()) peedView.setVisibility(View.VISIBLE);
             else peedView.setVisibility(View.INVISIBLE);
@@ -107,6 +126,14 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
 
             //Add a tag to future view in order to use in onClickListener
             if(!record.isRecord()) view.setTag(FUTURE_VIEW_OBJECT);
+        }
+
+        public void setRecordArryList(ArrayList<Record> recordArrayList) {
+            this.recordArrayList=recordArrayList;
+        }
+
+        public void setAdapter(RecyclerView.Adapter adapter) {
+            this.adapter=adapter;
         }
     }
 }

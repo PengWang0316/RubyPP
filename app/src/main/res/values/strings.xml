@@ -5,4 +5,15 @@
     <string name="picture_peed">Peed</string>
     <string name="picture_pooped">Pooped</string>
     <string name="picture_ate">Ate</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="update_dialog_title">What Ruby did around </string>
+    <!--Array list for update dialog-->
+    <string-array name="update_dialog_array">
+        <item>Peed</item>
+        <item>Pooped</item>
+        <item>Ate</item>
+    </string-array>
+
 </resources>
