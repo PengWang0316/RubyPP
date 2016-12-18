@@ -12,6 +12,7 @@ import android.util.SparseBooleanArray;
 import com.example.pengwang.rubypp.R;
 import com.example.pengwang.rubypp.adapters.MainRecyclerViewAdapter;
 import com.example.pengwang.rubypp.dao.Record;
+import com.example.pengwang.rubypp.utils.SQLUtil;
 
 import java.util.HashMap;
 
@@ -60,6 +61,12 @@ public class AddRecordDialogFragment extends DialogFragment {
                  record.setPeed(booleanArray.get(PEED_INDEX));
                  record.setPooped(booleanArray.get(POOPED_INDEX));
                  record.setAte(booleanArray.get(ATE_INDEX));
+                 //Use SQLUtil class to insert or update the records
+                 if(record.isRecord()) SQLUtil.updateRecord(record);
+                 else{
+                     record.setRecord(true);
+                     SQLUtil.insertRecord(record);
+                 }
                  //after finish, call the adapter back
                  holder.callBackAddNewRecord(recordIndex);
             }

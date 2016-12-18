@@ -1,7 +1,9 @@
 package com.example.pengwang.rubypp.adapters;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -82,8 +84,12 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
 
         @Override
         public void onClick(View view) {
+            /*Do not need to do this judgement
+            *Records and future items will use the same method to update
             if(view.getTag()==FUTURE_VIEW_OBJECT) addNewRecord(view);
             else Log.d(TAG, "-------------------Record View was clicked--------------------------");
+            */
+            updateRecord(view);
         }
 
         /********
@@ -91,7 +97,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
          * Update the database simultaneity
          * @param view the current view that was clicked
          */
-        private void addNewRecord(View view) {
+        private void updateRecord(View view) {
             int index=Integer.parseInt(((TextView)view.findViewById(R.id.main_recycler_row_index)).getText().toString());
             AddRecordDialogFragment dialogFragment=new AddRecordDialogFragment();
             dialogFragment.setHolder(this);
@@ -124,8 +130,12 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
             if(record.isAte()) ateView.setVisibility(View.VISIBLE);
             else ateView.setVisibility(View.INVISIBLE);
 
+            //Set different background colors for record and future item.
+            if(record.isRecord()) view.setBackgroundColor(ContextCompat.getColor(view.getContext(),R.color.record_background));
+            else view.setBackgroundColor(ContextCompat.getColor(view.getContext(),R.color.future_item_background));
+
             //Add a tag to future view in order to use in onClickListener
-            if(!record.isRecord()) view.setTag(FUTURE_VIEW_OBJECT);
+            //if(!record.isRecord()) view.setTag(FUTURE_VIEW_OBJECT);
         }
 
         public void setRecordArryList(ArrayList<Record> recordArrayList) {

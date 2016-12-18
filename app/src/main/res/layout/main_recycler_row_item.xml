@@ -4,7 +4,9 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingTop="15dp"
-    android:paddingBottom="15dp">
+    android:paddingBottom="15dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
     <!--android:background="@drawable/recycler_layout_border"-->
 
     <TextView

@@ -1,6 +1,7 @@
 package com.example.pengwang.rubypp.utils;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.example.pengwang.rubypp.dao.Record;
 
@@ -13,6 +14,7 @@ import java.util.Collection;
  */
 public class SQLUtil {
     private final static int NUMBER_OF_ITEM_FOR_FUTURE=5;
+    private static final String TAG = "SQLUtil";
 
 
     //Getting records from the database.
@@ -86,5 +88,13 @@ public class SQLUtil {
         recordArrayList.add(r5);
         recordArrayList.add(r6);
         return recordArrayList;
+    }
+
+    public static void updateRecord(Record record) {
+        Log.d(TAG,"---------------Updated Record---------------------");
+    }
+
+    public static void insertRecord(Record record) {
+        Log.d(TAG,"---------------Inserted Record---------------------");
     }
 }
