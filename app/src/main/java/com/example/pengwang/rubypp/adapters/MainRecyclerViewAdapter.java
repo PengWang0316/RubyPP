@@ -131,8 +131,12 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
             else ateView.setVisibility(View.INVISIBLE);
 
             //Set different background colors for record and future item.
+
             if(record.isRecord()) view.setBackgroundColor(ContextCompat.getColor(view.getContext(),R.color.record_background));
             else view.setBackgroundColor(ContextCompat.getColor(view.getContext(),R.color.future_item_background));
+            /*
+            if(record.isRecord()) timeView.setTextColor(Color.GREEN);
+            else timeView.setTextColor(Color.GRAY);*/
 
             //Add a tag to future view in order to use in onClickListener
             //if(!record.isRecord()) view.setTag(FUTURE_VIEW_OBJECT);
