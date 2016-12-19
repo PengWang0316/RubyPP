@@ -11,6 +11,7 @@ import android.view.MenuItem;
 
 import com.example.pengwang.rubypp.adapters.MainRecyclerViewAdapter;
 import com.example.pengwang.rubypp.dao.Record;
+import com.example.pengwang.rubypp.decorations.VerticalSpaceItemDecoration;
 import com.example.pengwang.rubypp.utils.SQLUtil;
 
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         mainRecyclerView=(RecyclerView) findViewById(R.id.main_recycler_view);
         mainLinerLayoutManager = new LinearLayoutManager(this);
         mainRecyclerView.setLayoutManager(mainLinerLayoutManager);
+        mainRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration());
         adapter = new MainRecyclerViewAdapter(recordArrayList);
         mainRecyclerView.setAdapter(adapter);
     }
