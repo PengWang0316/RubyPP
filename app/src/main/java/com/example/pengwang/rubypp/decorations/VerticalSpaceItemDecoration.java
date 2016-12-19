@@ -10,7 +10,7 @@ import android.view.View;
 
 public class VerticalSpaceItemDecoration extends RecyclerView.ItemDecoration {
 
-    private static final int VERTICAL_ITEM_SPACE = 48;
+    private static final int VERTICAL_ITEM_SPACE = 25;
 
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {

@@ -70,6 +70,12 @@ public class AddRecordDialogFragment extends DialogFragment {
                  //after finish, call the adapter back
                  holder.callBackAddNewRecord(recordIndex);
             }
+        }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            //Do nothing but show a cancel button
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                return;
+            }
         });
 
 
