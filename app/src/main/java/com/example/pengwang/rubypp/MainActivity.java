@@ -5,6 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.example.pengwang.rubypp.adapters.MainRecyclerViewAdapter;
 import com.example.pengwang.rubypp.dao.Record;
@@ -17,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mainRecyclerView;
     private LinearLayoutManager mainLinerLayoutManager;
     private ArrayList<Record> recordArrayList = new ArrayList<Record>();
+    private RecyclerView.Adapter adapter;
 
     //private final static String[] TEXTS_OF_TIME_VIEW={"05:00","07:00","11:00","14:00","17:00","20:00","23:00"};
 
@@ -33,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         mainRecyclerView=(RecyclerView) findViewById(R.id.main_recycler_view);
         mainLinerLayoutManager = new LinearLayoutManager(this);
         mainRecyclerView.setLayoutManager(mainLinerLayoutManager);
-        RecyclerView.Adapter adapter = new MainRecyclerViewAdapter(recordArrayList);
+        adapter = new MainRecyclerViewAdapter(recordArrayList);
         mainRecyclerView.setAdapter(adapter);
     }
 
@@ -41,6 +45,33 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if(recordArrayList.size()==0) SQLUtil.getInitialRecordsFromDatabase(mainRecyclerView,recordArrayList);
+    }
+
+    /******
+     * Inflate menu for main activity (call back)
+     * @param menu the main activity's menu
+     * @return always true after inflate
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater=getMenuInflater();
+        inflater.inflate(R.menu.main_action_menu,menu);
+        return true;
+    }
+
+    /**********
+     * action when item was clicked
+     * @param item was selected
+     * @return true
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.main_action_menu_refresh:
+                SQLUtil.refreshView(mainRecyclerView,recordArrayList,adapter);
+                //SQLUtil.getInitialRecordsFromDatabase();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**************************

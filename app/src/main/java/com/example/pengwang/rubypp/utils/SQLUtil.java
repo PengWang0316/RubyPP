@@ -97,4 +97,12 @@ public class SQLUtil {
     public static void insertRecord(Record record) {
         Log.d(TAG,"---------------Inserted Record---------------------");
     }
+
+    public static void refreshView(RecyclerView mainRecyclerView, ArrayList<Record> recordArrayList, RecyclerView.Adapter adapter) {
+        recordArrayList.clear();
+        getInitialRecordsFromDatabase(mainRecyclerView,recordArrayList);
+
+        //**********this should be refreshed in a call back after get data from database
+        adapter.notifyDataSetChanged();
+    }
 }

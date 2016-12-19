@@ -9,6 +9,7 @@
     <string name="cancel">Cancel</string>
 
     <string name="update_dialog_title">What Ruby did around </string>
+    <string name="main_action_menu_refresh">Refresh</string>
     <!--Array list for update dialog-->
     <string-array name="update_dialog_array">
         <item>Peed</item>
