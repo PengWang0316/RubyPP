@@ -8,8 +8,12 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
 
-    <string name="update_dialog_title">What Ruby did around </string>
+    <string name="update_dialog_title">What Ruby did around</string>
     <string name="main_action_menu_refresh">Refresh</string>
+    <string name="peed">Peed</string>
+    <string name="pooped">Pooped</string>
+    <string name="ate">Ate</string>
+    <string name="time_picker_dialog_title">Pick up the right time</string>
     <!--Array list for update dialog-->
     <string-array name="update_dialog_array">
         <item>Peed</item>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<a href="https://icons8.com/web-app/15431/Checked">Checked icon credits</a>-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TimePicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/add_record_dialog_time_picker"
+        android:timePickerMode="spinner"
+        android:layout_gravity="center"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/add_record_dialog_layout">
+
+        <CheckedTextView
+            android:id="@+id/add_record_dialog_peed"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/peed"
+            android:checkMark="@drawable/checked_16"
+            android:padding="10dp"
+            android:gravity="center_vertical"
+            android:checked="false"
+            android:onClick="onClickDialog"/>
+        <CheckedTextView
+            android:id="@+id/add_record_dialog_pooped"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/pooped"
+            android:checkMark="@drawable/checked_16"
+            android:padding="10dp"
+            android:gravity="center_vertical"
+            android:checked="false"
+            android:onClick="onClickDialog"/>
+        <CheckedTextView
+            android:id="@+id/add_record_dialog_ate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/ate"
+            android:checkMark="@drawable/checked_16"
+            android:padding="10dp"
+            android:gravity="center_vertical"
+            android:checked="false"
+            android:onClick="onClickDialog"/>
+        </LinearLayout>
+
+
+</LinearLayout>
