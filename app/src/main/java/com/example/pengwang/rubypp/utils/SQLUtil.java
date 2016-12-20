@@ -1,5 +1,7 @@
 package com.example.pengwang.rubypp.utils;
 
+import android.app.Activity;
+import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
@@ -13,82 +15,35 @@ import java.util.Collection;
  * Util class that will be used to get data from database.
  */
 public class SQLUtil {
-    private final static int NUMBER_OF_ITEM_FOR_FUTURE=5;
+
     private static final String TAG = "SQLUtil";
+    private static final int MAX_PROGRESS = 10;
 
 
     //Getting records from the database.
-    public static void getInitialRecordsFromDatabase(RecyclerView recyclerView,ArrayList<Record> recordArrayList) {
-        recordArrayList.addAll(getRecordsFromDatabase());
-        recordArrayList.addAll(getFutureRecords(recordArrayList.get(recordArrayList.size()-1)));
-        recyclerView.scrollToPosition(recordArrayList.size()-1);
+    public static void getInitialRecordsFromDatabase(final RecyclerView recyclerView,final ArrayList<Record> recordArrayList) {
+        new DatabaseAsyncTask((Activity) recyclerView.getContext()){
+
+            @Override
+            protected Integer doInBackground(String... strings) {
+
+                recordArrayList.addAll(getRecordsFromDatabase());
+                recordArrayList.addAll(getFutureRecords(recordArrayList.get(recordArrayList.size()-1)));
+                return END_PROGRESS;
+            }
+
+            @Override
+            protected void onPostExecute(Integer integer) {
+                super.onPostExecute(integer);
+                recyclerView.scrollToPosition(recordArrayList.size()-1);
+            }
+        }.execute();
+
     }
 
-    private static ArrayList<Record> getFutureRecords(Record lastRecord) {
-        ArrayList<Record> recordsList= new ArrayList<>(NUMBER_OF_ITEM_FOR_FUTURE);
-        for(int i=0;i<4;i++){
-            Record newRecord=new Record(lastRecord);
-            recordsList.add(newRecord);
-            lastRecord=newRecord;
-        }
 
-        return recordsList;
-    }
 
-    private static Collection<? extends Record> getRecordsFromDatabase() {
-        ArrayList<Record> recordArrayList=new ArrayList<>();
-        Record r1=new Record();
-        Record r2=new Record();
-        Record r3=new Record();
-        Record r4=new Record();
-        Record r5=new Record();
-        Record r6=new Record();
 
-        r1.setTime("5:00");
-        r1.setPeed(true);
-        r1.setDate("03/12/2016");
-        r1.setSpouseTime(Record.SIX_OCLOCK);
-        r2.setTime("7:00");
-        r2.setPooped(true);
-        r2.setAte(true);
-        r2.setDate("03/12/2016");
-        r2.setSpouseTime(Record.SEVEN_OCLOCK);
-        r3.setTime("11:00");
-        r3.setPeed(true);
-        r3.setDate("03/12/2016");
-        r3.setSpouseTime(Record.ELEVEN_OCLOCK);
-        r4.setTime("14:00");
-        r4.setPeed(true);
-        r4.setDate("03/12/2016");
-        r4.setSpouseTime(Record.FOURTEEN_OCLOCK);
-        r5.setTime("17:00");
-        r5.setPeed(true);
-        r5.setDate("03/12/2016");
-        r5.setSpouseTime(Record.SEVENTEEN_OCLOCK);
-        r6.setTime("20:00");
-        r6.setPeed(true);
-        r6.setDate("03/12/2016");
-        r6.setSpouseTime(Record.TWENTY_OCLOCK);
-        recordArrayList.add(r1);
-        recordArrayList.add(r2);
-
-        /*
-        for (int i=0;i<50;i++){
-            Record r4=new Record();
-            r4.setTime("5 AM");
-            r4.setPeed(true);
-            r4.setPooped(true);
-            r4.setAte(true);
-            r4.setDate("March 12 2016");
-            recordArrayList.add(r4);
-        }
-        */
-        recordArrayList.add(r3);
-        recordArrayList.add(r4);
-        recordArrayList.add(r5);
-        recordArrayList.add(r6);
-        return recordArrayList;
-    }
 
     public static void updateRecord(Record record) {
         Log.d(TAG,"---------------Updated Record---------------------");

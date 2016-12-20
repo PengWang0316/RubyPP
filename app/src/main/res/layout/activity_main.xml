@@ -23,7 +23,17 @@
         android:layout_height="8dp"
         android:background="@drawable/toolbar_shadow"
         />
-
+        <!--Show when connect to the database-->
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/main_progress_bar"
+            android:visibility="invisible"
+            android:layout_gravity="center_vertical"
+            style="@android:style/Widget.ProgressBar"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            />
     <!--Recycler View-->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/main_recycler_view"
