@@ -106,7 +106,7 @@ public class AddRecordDialogFragment extends DialogFragment {
             //Do nothing but show a cancel button
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                return;
+
             }
         });
 
@@ -128,66 +128,6 @@ public class AddRecordDialogFragment extends DialogFragment {
     }
 
 
-    /***new version
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        //Initial and give default value to boolean arry
-        booleanArray=new SparseBooleanArray(INITIAL_CAPACITY);
-        booleanArray.put(PEED_INDEX,false);
-        booleanArray.put(POOPED_INDEX,false);
-        booleanArray.put(ATE_INDEX,false);
-
-        activity=getActivity();
-
-
-        //Create builder and listeners
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        LayoutInflater inflater=activity.getLayoutInflater();
-        //set the customized dialog layout
-
-        builder.setTitle(R.string.update_dialog_title+record.getSpouseTime()).setView(inflater.inflate(R.layout.add_record_dialog,null))
-                .setPositiveButton(R.string.ok,new DialogInterface.OnClickListener(){
-            @Override
-            /***********
-                    * The main ui thread does not wait for this dialog. So, we have to update database when uses finish
-            * the choice.
-                    *
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-                record.setPeed(booleanArray.get(PEED_INDEX));
-                record.setPooped(booleanArray.get(POOPED_INDEX));
-                record.setAte(booleanArray.get(ATE_INDEX));
-                //Use SQLUtil class to insert or update the records
-                if(record.isRecord()) SQLUtil.updateRecord(record);
-                else{
-                    record.setRecord(true);
-                    SQLUtil.insertRecord(record);
-                }
-                //after finish, call the adapter back
-                holder.callBackAddNewRecord(recordIndex);
-            }
-        }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-            //Do nothing but show a cancel button
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                return;
-            }
-        });
-        //save the references for items
-        peed=(CheckedTextView) activity.findViewById(R.id.add_record_dialog_peed);
-        pooped=(CheckedTextView) activity.findViewById(R.id.add_record_dialog_pooped);
-        ate=(CheckedTextView) activity.findViewById(R.id.add_record_dialog_ate);
-        timePicker=(TimePicker) activity.findViewById(R.id.add_record_dialog_time_picker);
-        //set listener for check text view
-        View.OnClickListener checkedTextViewListener=new CheckedTextViewListener();
-        peed.setOnClickListener(checkedTextViewListener);
-        pooped.setOnClickListener(checkedTextViewListener);
-        ate.setOnClickListener(checkedTextViewListener);
-
-
-        return builder.create();
-    }
-        **/
 
     public void setRecord(Record record) {
         this.record = record;

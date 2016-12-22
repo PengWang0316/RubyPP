@@ -87,7 +87,8 @@ public class Record {
     public void setTime(String time) {
         //timeFormat.applyPattern(time);
         //Subtract second from time
-        this.time = time.substring(0,5);
+        if(time.length()>5) this.time = time.substring(0,5);
+        else this.time=time;
     }
 
     public boolean isPeed() {

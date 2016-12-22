@@ -2,9 +2,7 @@ package com.example.pengwang.rubypp.utils;
 
 import android.app.Activity;
 import android.os.AsyncTask;
-import android.os.SystemClock;
 import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -27,16 +25,17 @@ import java.util.Collection;
 
 /**
  * Created by Peng on 12/20/2016.
+ *
  */
 
-public abstract class DatabaseAsyncTask extends AsyncTask<String,Integer,Integer> {
+abstract class DatabaseAsyncTask extends AsyncTask<String,Integer,Integer> {
     private static final int START_PROGRESS = 0;
     private final static int NUMBER_OF_ITEM_FOR_FUTURE=5;
-    public static final int END_PROGRESS = 5;
+    static final int END_PROGRESS = 5;
     private static final String GET_INITIAL_URL = "http://pengwang.freeoda.com/GetInitialRecords.php";
     private static final int INT_TRUE = 1;
-    protected Activity activity;
-    private final static String TAG="DatabaseAsyncTask";
+    Activity activity;
+    //private final static String TAG="DatabaseAsyncTask";
     private String message;
 
     private String getMessage() {
@@ -45,11 +44,11 @@ public abstract class DatabaseAsyncTask extends AsyncTask<String,Integer,Integer
 
 
 
-    public void setMessage(String message) {
+    void setMessage(String message) {
         this.message = message;
     }
 
-    public DatabaseAsyncTask(Activity activity){
+    DatabaseAsyncTask(Activity activity){
         this.activity=activity;
     }
     @Override
@@ -77,7 +76,7 @@ public abstract class DatabaseAsyncTask extends AsyncTask<String,Integer,Integer
 
 
 
-    public ArrayList<Record> getFutureRecords(Record lastRecord) {
+    ArrayList<Record> getFutureRecords(Record lastRecord) {
         ArrayList<Record> recordsList= new ArrayList<>(NUMBER_OF_ITEM_FOR_FUTURE);
         for(int i=0;i<4;i++){
             Record newRecord=new Record(lastRecord);
@@ -88,7 +87,7 @@ public abstract class DatabaseAsyncTask extends AsyncTask<String,Integer,Integer
         return recordsList;
     }
 
-    public Collection<? extends Record> getRecordsFromDatabase() {
+    Collection<? extends Record> getRecordsFromDatabase() {
         //int progress=START_PROGRESS;
         //publishProgress(progress++, END_PROGRESS);
         //testSleep();
@@ -160,6 +159,7 @@ public abstract class DatabaseAsyncTask extends AsyncTask<String,Integer,Integer
             e.printStackTrace();
         }
         try {
+            if (url==null) throw new NullPointerException();
             connection=(HttpURLConnection)url.openConnection();
             //connection.setDoOutput(true);
             //connection.setRequestMethod("GET");
@@ -168,13 +168,13 @@ public abstract class DatabaseAsyncTask extends AsyncTask<String,Integer,Integer
             BufferedReader bufferedReader=new BufferedReader(new InputStreamReader(inputStream));
             StringBuilder sb=new StringBuilder();
             while ((line=bufferedReader.readLine())!=null){
-                sb.append(line+"\n");
+                sb.append(line).append("\n");
             }
             inputStream.close();
             result=sb.toString();
-        } catch (IOException e) {
+        } catch (IOException | NullPointerException e) {
             e.printStackTrace();
-        }finally{if (connection!=null) connection.disconnect();}
+        } finally{if (connection!=null) connection.disconnect();}
 
         //Convert it to JSON
 
@@ -213,8 +213,9 @@ public abstract class DatabaseAsyncTask extends AsyncTask<String,Integer,Integer
     private void showSnackbar() {
         Snackbar.make(activity.findViewById(R.id.activity_main),getMessage(),Snackbar.LENGTH_SHORT).show();
     }
-
+/**
     private void testSleep(){
         SystemClock.sleep(500);
     }
+ **/
 }
