@@ -200,13 +200,12 @@ public abstract class DatabaseAsyncTask extends AsyncTask<String,Integer,Integer
             record.setTime(newJson.getString(Record.TITLE_TIME));
             record.setDate(newJson.getString(Record.TITLE_DATE));
             record.setSpouseTime(newJson.getString(Record.TITLE_SPOUSE_TIME));
+            record.setName(newJson.getString(Record.TITLE_NAME));
             record.setPeed(newJson.getInt(Record.TITLE_IS_PEED)==INT_TRUE);
             record.setPooped(newJson.getInt(Record.TITLE_IS_POOPED)==INT_TRUE);
             record.setAte(newJson.getInt(Record.TITLE_IS_ATE)==INT_TRUE);
             newRecordArrayList.add(record);
         }
-
-
 
         return newRecordArrayList;
     }

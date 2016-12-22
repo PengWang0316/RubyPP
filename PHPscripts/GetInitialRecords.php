@@ -11,6 +11,7 @@ while($row=mysql_fetch_array($r))
     	$flag[$index][isPeed]=$row[isPeed];
     	$flag[$index][isPooped]=$row[isPooped];
     	$flag[$index][isAte]=$row[isAte];
+    	$flag[$index][name]=$row[name];
    }
 
    print(json_encode($flag));

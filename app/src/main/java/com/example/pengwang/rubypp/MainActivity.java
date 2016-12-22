@@ -1,5 +1,7 @@
 package com.example.pengwang.rubypp;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.pengwang.rubypp.Fragments.InputNameDialog;
 import com.example.pengwang.rubypp.adapters.MainRecyclerViewAdapter;
 import com.example.pengwang.rubypp.dao.Record;
 import com.example.pengwang.rubypp.decorations.VerticalSpaceItemDecoration;
@@ -43,6 +46,21 @@ public class MainActivity extends AppCompatActivity {
         mainRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration());
         adapter = new MainRecyclerViewAdapter(recordArrayList);
         mainRecyclerView.setAdapter(adapter);
+
+        findDefaultName();
+    }
+
+    /*******
+     * Test whether has a default name
+     */
+    private void findDefaultName() {
+        SharedPreferences sharedPreferences= getPreferences(Context.MODE_PRIVATE);
+        String defaultName=sharedPreferences.getString(getString(R.string.default_name_key),null);
+        if (defaultName==null){
+            InputNameDialog inputNameDialog=new InputNameDialog();
+            inputNameDialog.setCancelable(false);
+            inputNameDialog.show(getSupportFragmentManager(), InputNameDialog.INPUT_NAME_DIALOG);
+        }
     }
 
     @Override

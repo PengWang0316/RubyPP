@@ -19,6 +19,7 @@ public class Record {
     private String date="";
     private String spouseTime="";
     private boolean isRecord=true;
+    private String name="--";
 
     private static final String DATA_FORMAT = "yyyy-MM-dd";
     public final static String SIX_OCLOCK="06:00";
@@ -35,6 +36,7 @@ public class Record {
     public final static String TITLE_IS_PEED="isPeed";
     public final static String TITLE_IS_POOPED="isPooped";
     public final static String TITLE_IS_ATE="isAte";
+    public final static String TITLE_NAME="name";
 
     //private static final String TIME_FORMAT = "HH:mm";
     //private final static SimpleDateFormat timeFormat=new SimpleDateFormat(TIME_FORMAT);
@@ -135,5 +137,13 @@ public class Record {
 
     public void setRecord(boolean record) {
         isRecord = record;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

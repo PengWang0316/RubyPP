@@ -63,6 +63,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
         private ImageView poopedView;
         private ImageView ateView;
         private TextView dateView;
+        private TextView nameView;
 
         private ArrayList<Record> recordArrayList;
         private RecyclerView.Adapter adapter;
@@ -77,6 +78,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
             ateView=(ImageView)itemView.findViewById(R.id.main_recycler_row_ate);
             dateView=(TextView)itemView.findViewById(R.id.main_recycler_row_date);
             indexView=(TextView)itemView.findViewById(R.id.main_recycler_row_index);
+            nameView=(TextView)itemView.findViewById(R.id.main_recycler_row_name);
 
             //Setting up the click listener
             itemView.setOnClickListener(this);
@@ -123,6 +125,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
             timeView.setText(record.getTime());
             dateView.setText(record.getDate());
             indexView.setText(String.valueOf(position));
+            nameView.setText(record.getName());
             //Judging whether show icons
             if (record.isPeed()) peedView.setVisibility(View.VISIBLE);
             else peedView.setVisibility(View.INVISIBLE);

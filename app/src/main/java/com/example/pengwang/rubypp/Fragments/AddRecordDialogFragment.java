@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
@@ -79,10 +80,16 @@ public class AddRecordDialogFragment extends DialogFragment {
                  record.setPeed(booleanArray.get(PEED_INDEX));
                  record.setPooped(booleanArray.get(POOPED_INDEX));
                  record.setAte(booleanArray.get(ATE_INDEX));
+                 //SharedPreferences sharedPreferences= getActivity().getPreferences(Context.MODE_PRIVATE);
+                 //String defaultName=sharedPreferences.getString(getString(R.string.default_name_key),null);
                  //Use SQLUtil class to insert or update the records
                  if(record.isRecord()) SQLUtil.updateRecord(record);
                  else{
                      record.setRecord(true);
+                     //set name for record
+                     SharedPreferences sharedPreferences= getActivity().getPreferences(Context.MODE_PRIVATE);
+                     String defaultName=sharedPreferences.getString(getString(R.string.default_name_key),null);
+                     record.setName(defaultName);
                      SQLUtil.insertRecord(record);
                  }
                  //after finish, call another dialog to pick up time

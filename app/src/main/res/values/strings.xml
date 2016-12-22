@@ -16,6 +16,10 @@
     <string name="time_picker_dialog_title">Pick up the right time</string>
     <string name="default_database_message">Finished</string>
     <string name="get_information_finished_message">Updated to new data</string>
+    <string name="default_name_key">default_name_key</string>
+    <string name="input_name_dialog_title">Please enter you name</string>
+    <string name="input_name_dialog_name_view_hint">Please enter your name here</string>
+    <string name="input_name_empty_message">You have to enter your name</string>
 
     <!--Array list for update dialog-->
     <string-array name="update_dialog_array">
