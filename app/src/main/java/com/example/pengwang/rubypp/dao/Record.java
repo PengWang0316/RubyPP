@@ -36,6 +36,9 @@ public class Record {
     public final static String TITLE_IS_POOPED="isPooped";
     public final static String TITLE_IS_ATE="isAte";
 
+    //private static final String TIME_FORMAT = "HH:mm";
+    //private final static SimpleDateFormat timeFormat=new SimpleDateFormat(TIME_FORMAT);
+
 
 
     private final static HashMap<String,String> SPOUSE_TIME_KEY_MAP=new HashMap<String,String>();
@@ -80,7 +83,9 @@ public class Record {
     }
 
     public void setTime(String time) {
-        this.time = time;
+        //timeFormat.applyPattern(time);
+        //Subtract second from time
+        this.time = time.substring(0,5);
     }
 
     public boolean isPeed() {
