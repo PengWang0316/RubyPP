@@ -1,7 +1,5 @@
 package com.example.pengwang.rubypp.dao;
 
-import android.graphics.Bitmap;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -22,19 +20,28 @@ public class Record {
     private String spouseTime="";
     private boolean isRecord=true;
 
-    private static final String DATA_FORMAT = "MM/dd/yyyy";
+    private static final String DATA_FORMAT = "yyyy-MM-dd";
     public final static String SIX_OCLOCK="06:00";
-    public final static String SEVEN_OCLOCK="07:00";
+    public final static String EIGHT_OCLOCK ="08:00";
     public final static String ELEVEN_OCLOCK="11:00";
     public final static String FOURTEEN_OCLOCK="14:00";
     public final static String SEVENTEEN_OCLOCK="17:00";
     public final static String TWENTY_OCLOCK="20:00";
     public final static String TWENTY_THREE_OCLOCK="23:00";
 
+    public final static String TITLE_TIME="time";
+    public final static String TITLE_DATE="date";
+    public final static String TITLE_SPOUSE_TIME="spouseTime";
+    public final static String TITLE_IS_PEED="isPeed";
+    public final static String TITLE_IS_POOPED="isPooped";
+    public final static String TITLE_IS_ATE="isAte";
+
+
+
     private final static HashMap<String,String> SPOUSE_TIME_KEY_MAP=new HashMap<String,String>();
     static {
-        SPOUSE_TIME_KEY_MAP.put(Record.SIX_OCLOCK,Record.SEVEN_OCLOCK);
-        SPOUSE_TIME_KEY_MAP.put(Record.SEVEN_OCLOCK,Record.ELEVEN_OCLOCK);
+        SPOUSE_TIME_KEY_MAP.put(Record.SIX_OCLOCK,Record.EIGHT_OCLOCK);
+        SPOUSE_TIME_KEY_MAP.put(Record.EIGHT_OCLOCK,Record.ELEVEN_OCLOCK);
         SPOUSE_TIME_KEY_MAP.put(Record.ELEVEN_OCLOCK,Record.FOURTEEN_OCLOCK);
         SPOUSE_TIME_KEY_MAP.put(Record.FOURTEEN_OCLOCK,Record.SEVENTEEN_OCLOCK);
         SPOUSE_TIME_KEY_MAP.put(Record.SEVENTEEN_OCLOCK,Record.TWENTY_OCLOCK);

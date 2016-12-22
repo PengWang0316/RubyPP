@@ -14,6 +14,9 @@
     <string name="pooped">Pooped</string>
     <string name="ate">Ate</string>
     <string name="time_picker_dialog_title">Pick up the right time</string>
+    <string name="default_database_message">Finished</string>
+    <string name="get_information_finished_message">Updated to new data</string>
+
     <!--Array list for update dialog-->
     <string-array name="update_dialog_array">
         <item>Peed</item>

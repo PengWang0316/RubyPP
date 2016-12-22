@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.example.pengwang.rubypp.R;
 import com.example.pengwang.rubypp.dao.Record;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class SQLUtil {
 
             @Override
             protected Integer doInBackground(String... strings) {
-
+                setMessage(activity.getResources().getString(R.string.get_information_finished_message));
                 recordArrayList.addAll(getRecordsFromDatabase());
                 recordArrayList.addAll(getFutureRecords(recordArrayList.get(recordArrayList.size()-1)));
                 return END_PROGRESS;
