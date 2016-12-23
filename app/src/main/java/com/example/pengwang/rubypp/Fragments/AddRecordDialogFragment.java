@@ -82,18 +82,16 @@ public class AddRecordDialogFragment extends DialogFragment {
                  record.setAte(booleanArray.get(ATE_INDEX));
                  //SharedPreferences sharedPreferences= getActivity().getPreferences(Context.MODE_PRIVATE);
                  //String defaultName=sharedPreferences.getString(getString(R.string.default_name_key),null);
-                 //Use SQLUtil class to insert or update the records
-                 if(record.isRecord()) SQLUtil.updateRecord(record);
-                 else{
-                     record.setRecord(true);
-                     //set name for record
-                     SharedPreferences sharedPreferences= getActivity().getPreferences(Context.MODE_PRIVATE);
-                     String defaultName=sharedPreferences.getString(getString(R.string.default_name_key),null);
-                     record.setName(defaultName);
-                     SQLUtil.insertRecord(record);
-                 }
+                 Activity activity=getActivity();
+                if (!record.isRecord()){
+                    //record.setRecord(true);
+                    //set name for record
+                    SharedPreferences sharedPreferences= activity.getPreferences(Context.MODE_PRIVATE);
+                    String defaultName=sharedPreferences.getString(getString(R.string.default_name_key),null);
+                    record.setName(defaultName);
+                }
                  //after finish, call another dialog to pick up time
-                 showTimePickerDialog();
+                 showTimePickerDialog(activity);
                  //TimePickerDialogFragment timePickerDialogFragment=TimePickerDialogFragment.getInstance(getContext());
                  //timePickerDialogFragment.setHolder(holder);
                  //timePickerDialogFragment.setRecord(record);
@@ -113,13 +111,20 @@ public class AddRecordDialogFragment extends DialogFragment {
         return builder.create();
     }
 
-    private void showTimePickerDialog() {
+    private void showTimePickerDialog(final Activity activity) {
         Calendar calendar=Calendar.getInstance();
         TimePickerDialog dialog=new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
                 Log.d(TAG,"-----------TimePickerDialogFragment changed------------");
                 record.setTime(String.valueOf(hourOfDay)+":"+String.valueOf(minute));
+                //Use SQLUtil class to insert or update the records
+                if(record.isRecord()) SQLUtil.updateRecord(record,activity);
+                else {
+                    record.setRecord(true);
+                    SQLUtil.insertRecord(record,activity);
+                }
+
                 holder.callBackAddNewRecord(recordIndex);
             }
         },calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE),true);

@@ -23,7 +23,7 @@ public class SQLUtil {
 
     //Getting records from the database.
     public static void getInitialRecordsFromDatabase(final RecyclerView recyclerView,final ArrayList<Record> recordArrayList) {
-        new DatabaseAsyncTask((Activity) recyclerView.getContext()){
+        new DatabaseAsyncTask(null,(Activity) recyclerView.getContext()){
 
             @Override
             protected Integer doInBackground(String... strings) {
@@ -46,12 +46,31 @@ public class SQLUtil {
 
 
 
-    public static void updateRecord(Record record) {
-        Log.d(TAG,"---------------Updated Record---------------------");
+    public static void updateRecord(Record record,Activity activity) {
+        //Log.d(TAG,"---------------Updated Record---------------------");
+        new DatabaseAsyncTask(record, activity){
+
+            @Override
+            protected Integer doInBackground(String... strings) {
+                setMessage(activity.getResources().getString(R.string.update_record_finished_message));
+                updateRecordToDatabase(record);
+                return END_PROGRESS;
+            }
+
+        }.execute();
     }
 
-    public static void insertRecord(Record record) {
-        Log.d(TAG,"---------------Inserted Record---------------------");
+    public static void insertRecord(Record record,Activity activity) {
+       //Log.d(TAG,"---------------Inserted Record---------------------");
+        new DatabaseAsyncTask(record, activity){
+
+            @Override
+            protected Integer doInBackground(String... strings) {
+                setMessage(activity.getResources().getString(R.string.insert_record_finished_message));
+                insertRecordToDatabase(record);
+                return END_PROGRESS;
+            }
+        }.execute();
     }
 
     public static void refreshView(RecyclerView mainRecyclerView, ArrayList<Record> recordArrayList, RecyclerView.Adapter adapter) {

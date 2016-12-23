@@ -20,6 +20,8 @@
     <string name="input_name_dialog_title">Please enter you name</string>
     <string name="input_name_dialog_name_view_hint">Please enter your name here</string>
     <string name="input_name_empty_message">You have to enter your name</string>
+    <string name="insert_record_finished_message">Insert Succeed</string>
+    <string name="update_record_finished_message">Update Succeed</string>
 
     <!--Array list for update dialog-->
     <string-array name="update_dialog_array">

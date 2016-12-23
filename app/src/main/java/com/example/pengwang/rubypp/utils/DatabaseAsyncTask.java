@@ -3,6 +3,7 @@ package com.example.pengwang.rubypp.utils;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -14,14 +15,21 @@ import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Random;
 
 /**
  * Created by Peng on 12/20/2016.
@@ -34,7 +42,20 @@ abstract class DatabaseAsyncTask extends AsyncTask<String,Integer,Integer> {
     static final int END_PROGRESS = 5;
     private static final String GET_INITIAL_URL = "http://pengwang.freeoda.com/GetInitialRecords.php";
     private static final int INT_TRUE = 1;
+    private static final String UPDATE_PHP_URL = "http://pengwang.freeoda.com/UpdateRecord.php";
+    private static final String CONTENT_TYPE = "Content-Type";
+    private static final String APPLICATION_JSON = "application/json";
+    private static final String ACCEPT = "Accept";
+    private static final String PUT = "PUT";
+    private static final String EQUAL_MARK = "=";
+    private static final String UTF_8 = "UTF-8";
+    private static final String AND_MARK = "&";
+    private static final String POST = "POST";
+    private static final String STRING_TRUE = "1";
+    private static final String STRING_FALSE = "0";
+    private static final String INSERT_PHP_URL = "http://pengwang.freeoda.com/InsertNewRecord.php";
     Activity activity;
+    Record record;
     //private final static String TAG="DatabaseAsyncTask";
     private String message;
 
@@ -48,8 +69,9 @@ abstract class DatabaseAsyncTask extends AsyncTask<String,Integer,Integer> {
         this.message = message;
     }
 
-    DatabaseAsyncTask(Activity activity){
+    DatabaseAsyncTask(Record record,Activity activity){
         this.activity=activity;
+        this.record=record;
     }
     @Override
     protected void onPreExecute() {
@@ -74,7 +96,131 @@ abstract class DatabaseAsyncTask extends AsyncTask<String,Integer,Integer> {
         progressBar.setProgress(values[0]);
     }
 
+    void insertRecordToDatabase(Record record){
+        conncetToPhpScript(record, INSERT_PHP_URL);
+    }
 
+    void updateRecordToDatabase(Record record){
+        conncetToPhpScript(record,UPDATE_PHP_URL);
+    }
+
+    private void conncetToPhpScript(Record record,String Url) {
+        //Random random = new Random();
+        URL url = null;
+        try {
+            url = new URL(Url);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        HttpURLConnection connection = null;
+        try {
+            connection = (HttpURLConnection) url.openConnection();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            connection.setRequestMethod(POST);
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        }
+        connection.setDoInput(true);
+        connection.setDoOutput(true);
+
+
+        OutputStream os = null;
+        try {
+            os = connection.getOutputStream();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, UTF_8));
+            writer.write(getQuery(record));
+            writer.flush();
+            writer.close();
+            os.close();
+            connection.connect();
+
+            Log.d("TAG","---------------------"+connection.getResponseMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            connection.disconnect();
+        }
+
+        /*for test
+        String line=null;
+        InputStream inputStream= null;
+        try {
+            inputStream = new BufferedInputStream(connection.getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //Start to read the content
+        BufferedReader bufferedReader=new BufferedReader(new InputStreamReader(inputStream));
+        StringBuilder sb=new StringBuilder();
+        try {
+            while ((line=bufferedReader.readLine())!=null){
+                sb.append(line).append("\n");
+            }
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String result=sb.toString();
+        connection.disconnect();
+        */
+    }
+
+
+
+
+    private String getQuery(Record record) throws UnsupportedEncodingException{
+        StringBuffer sb=new StringBuffer();
+        sb.append(URLEncoder.encode(Record.ID, UTF_8));
+        sb.append(EQUAL_MARK);
+        sb.append(URLEncoder.encode(record.getId(),UTF_8));
+        sb.append(AND_MARK);
+
+        sb.append(URLEncoder.encode(Record.TITLE_NAME, UTF_8));
+        sb.append(EQUAL_MARK);
+        sb.append(URLEncoder.encode(record.getName(),UTF_8));
+        sb.append(AND_MARK);
+
+        sb.append(URLEncoder.encode(Record.TITLE_TIME, UTF_8));
+        sb.append(EQUAL_MARK);
+        sb.append(URLEncoder.encode(record.getTime(),UTF_8));
+        sb.append(AND_MARK);
+
+        sb.append(URLEncoder.encode(Record.TITLE_IS_PEED, UTF_8));
+        sb.append(EQUAL_MARK);
+        sb.append(URLEncoder.encode(record.isPeed()? STRING_TRUE : STRING_FALSE,UTF_8));
+        sb.append(AND_MARK);
+
+        sb.append(URLEncoder.encode(Record.TITLE_IS_POOPED, UTF_8));
+        sb.append(EQUAL_MARK);
+        sb.append(URLEncoder.encode(record.isPooped()? STRING_TRUE : STRING_FALSE,UTF_8));
+        sb.append(AND_MARK);
+
+        sb.append(URLEncoder.encode(Record.TITLE_IS_ATE, UTF_8));
+        sb.append(EQUAL_MARK);
+        sb.append(URLEncoder.encode(record.isAte()? STRING_TRUE : STRING_FALSE,UTF_8));
+        sb.append(AND_MARK);
+
+        sb.append(URLEncoder.encode(Record.TITLE_SPOUSE_TIME, UTF_8));
+        sb.append(EQUAL_MARK);
+        sb.append(URLEncoder.encode(record.getSpouseTime(),UTF_8));
+        sb.append(AND_MARK);
+
+        sb.append(URLEncoder.encode(Record.TITLE_DATE, UTF_8));
+        sb.append(EQUAL_MARK);
+        sb.append(URLEncoder.encode(record.getDate(),UTF_8));
+        //sb.append(AND_MARK);
+
+        return sb.toString();
+    }
 
     ArrayList<Record> getFutureRecords(Record lastRecord) {
         ArrayList<Record> recordsList= new ArrayList<>(NUMBER_OF_ITEM_FOR_FUTURE);
@@ -88,81 +234,36 @@ abstract class DatabaseAsyncTask extends AsyncTask<String,Integer,Integer> {
     }
 
     Collection<? extends Record> getRecordsFromDatabase() {
-        //int progress=START_PROGRESS;
-        //publishProgress(progress++, END_PROGRESS);
-        //testSleep();
-        /**
-        ArrayList<Record> recordArrayList=new ArrayList<>();
-        Record r1=new Record();
-        Record r2=new Record();
-        Record r3=new Record();
-        Record r4=new Record();
-        Record r5=new Record();
-        Record r6=new Record();
-        publishProgress(progress++, END_PROGRESS);
-        //testSleep();
-        r1.setTime("5:00");
-        r1.setPeed(true);
-        r1.setDate("03/12/2016");
-        r1.setSpouseTime(Record.SIX_OCLOCK);
-        r2.setTime("7:00");
-        r2.setPooped(true);
-        r2.setAte(true);
-        r2.setDate("03/12/2016");
-        r2.setSpouseTime(Record.EIGHT_OCLOCK);
-        publishProgress(progress++, END_PROGRESS);
-        //testSleep();
-        r3.setTime("11:00");
-        r3.setPeed(true);
-        r3.setDate("03/12/2016");
-        r3.setSpouseTime(Record.ELEVEN_OCLOCK);
-        r4.setTime("14:00");
-        r4.setPeed(true);
-        r4.setDate("03/12/2016");
-        r4.setSpouseTime(Record.FOURTEEN_OCLOCK);
-        r5.setTime("17:00");
-        r5.setPeed(true);
-        r5.setDate("03/12/2016");
-        r5.setSpouseTime(Record.SEVENTEEN_OCLOCK);
-        publishProgress(progress++, END_PROGRESS);
-        //testSleep();
-        r6.setTime("20:00");
-        r6.setPeed(true);
-        r6.setDate("03/12/2016");
-        r6.setSpouseTime(Record.TWENTY_OCLOCK);
-        recordArrayList.add(r1);
-        recordArrayList.add(r2);
-        publishProgress(progress++, END_PROGRESS);
+        JSONObject jsonObject;
+        ArrayList<Record> recordArrayList=null;
+        String result=getResultFromUrl(GET_INITIAL_URL);
+        //Convert it to JSON
 
-        recordArrayList.add(r3);
-        recordArrayList.add(r4);
-        recordArrayList.add(r5);
-        recordArrayList.add(r6);
-        publishProgress(progress, ++progress);
-        **/
+        try {
+            jsonObject=new JSONObject(result);
+            //Log.d(TAG,"--------------------------"+jsonObject.getString("time")+"-------------------------");
+            recordArrayList=turnJSONToArray(jsonObject);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
+        return recordArrayList;
+    }
 
-
-
-
-        //Real codes
+    private String getResultFromUrl(String getInitialUrl) {
         URL url=null;
         HttpURLConnection connection=null;
         String result="";
         String line;
-        JSONObject jsonObject;
-        ArrayList<Record> recordArrayList=null;
-
         try {
-            url=new URL(GET_INITIAL_URL);
+            url=new URL(getInitialUrl);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
         try {
             if (url==null) throw new NullPointerException();
             connection=(HttpURLConnection)url.openConnection();
-            //connection.setDoOutput(true);
-            //connection.setRequestMethod("GET");
+
             InputStream inputStream=new BufferedInputStream(connection.getInputStream());
             //Start to read the content
             BufferedReader bufferedReader=new BufferedReader(new InputStreamReader(inputStream));
@@ -175,20 +276,7 @@ abstract class DatabaseAsyncTask extends AsyncTask<String,Integer,Integer> {
         } catch (IOException | NullPointerException e) {
             e.printStackTrace();
         } finally{if (connection!=null) connection.disconnect();}
-
-        //Convert it to JSON
-
-        try {
-            jsonObject=new JSONObject(result);
-            //Log.d(TAG,"--------------------------"+jsonObject.getString("time")+"-------------------------");
-            recordArrayList=turnJSONToArray(jsonObject);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-
-
-        return recordArrayList;
+        return result;
     }
 
     private ArrayList<Record> turnJSONToArray(JSONObject jsonObject) throws JSONException {
@@ -197,6 +285,7 @@ abstract class DatabaseAsyncTask extends AsyncTask<String,Integer,Integer> {
         for (int i=jsonObject.length(); i>0; i--){
             Record record=new Record();
             JSONObject newJson=(JSONObject) jsonObject.get(String.valueOf(i));
+            record.setId(newJson.getString(Record.ID));
             record.setTime(newJson.getString(Record.TITLE_TIME));
             record.setDate(newJson.getString(Record.TITLE_DATE));
             record.setSpouseTime(newJson.getString(Record.TITLE_SPOUSE_TIME));

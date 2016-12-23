@@ -12,6 +12,8 @@ import java.util.HashMap;
  */
 public class Record {
 
+
+    private String id="";
     private String time="";
     private boolean isPeed=false;
     private boolean isPooped=false;
@@ -22,14 +24,15 @@ public class Record {
     private String name="--";
 
     private static final String DATA_FORMAT = "yyyy-MM-dd";
-    public final static String SIX_OCLOCK="06:00";
-    public final static String EIGHT_OCLOCK ="08:00";
-    public final static String ELEVEN_OCLOCK="11:00";
-    public final static String FOURTEEN_OCLOCK="14:00";
-    public final static String SEVENTEEN_OCLOCK="17:00";
-    public final static String TWENTY_OCLOCK="20:00";
-    public final static String TWENTY_THREE_OCLOCK="23:00";
+    private final static String SIX_OCLOCK="06:00";
+    private final static String EIGHT_OCLOCK ="08:00";
+    private final static String ELEVEN_OCLOCK="11:00";
+    private final static String FOURTEEN_OCLOCK="14:00";
+    private final static String SEVENTEEN_OCLOCK="17:00";
+    private final static String TWENTY_OCLOCK="20:00";
+    private final static String TWENTY_THREE_OCLOCK="23:00";
 
+    public static final String ID ="id" ;
     public final static String TITLE_TIME="time";
     public final static String TITLE_DATE="date";
     public final static String TITLE_SPOUSE_TIME="spouseTime";
@@ -146,5 +149,13 @@ public class Record {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
