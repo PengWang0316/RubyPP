@@ -5,4 +5,6 @@ $time=$_REQUEST['time'];
 $isPeed=$_REQUEST['isPeed'];
 $isPooped=$_REQUEST['isPooped'];
 $isAte=$_REQUEST['isAte'];
+$spouseTime=$_REQUEST['spouseTime'];
+$date=$_REQUEST['date'];
 ?>
