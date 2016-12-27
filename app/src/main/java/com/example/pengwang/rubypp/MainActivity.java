@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         //if(recordArrayList.size()==0) SQLUtil.getInitialRecordsFromDatabase(mainRecyclerView,recordArrayList);
+        if (recordArrayList.size()!=0) recordArrayList.clear();
         SQLUtil.getInitialRecordsFromDatabase(mainRecyclerView,recordArrayList);
     }
 
