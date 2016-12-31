@@ -222,6 +222,7 @@ abstract class DatabaseAsyncTask extends AsyncTask<String,Integer,Integer> {
         return sb.toString();
     }
 
+
     ArrayList<Record> getFutureRecords(Record lastRecord) {
         ArrayList<Record> recordsList= new ArrayList<>(NUMBER_OF_ITEM_FOR_FUTURE);
         for(int i=0;i<4;i++){
@@ -293,6 +294,8 @@ abstract class DatabaseAsyncTask extends AsyncTask<String,Integer,Integer> {
             record.setPeed(newJson.getInt(Record.TITLE_IS_PEED)==INT_TRUE);
             record.setPooped(newJson.getInt(Record.TITLE_IS_POOPED)==INT_TRUE);
             record.setAte(newJson.getInt(Record.TITLE_IS_ATE)==INT_TRUE);
+            record.setPeedInside(newJson.getInt(Record.TITLE_IS_PEED_inside)==INT_TRUE);
+            record.setPoopedInside(newJson.getInt(Record.TITLE_IS_POOPED_inside)==INT_TRUE);
             newRecordArrayList.add(record);
         }
 

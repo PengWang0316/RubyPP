@@ -29,9 +29,12 @@ public class SQLUtil {
             protected Integer doInBackground(String... strings) {
                 setMessage(activity.getResources().getString(R.string.get_information_finished_message));
                 recordArrayList.addAll(getRecordsFromDatabase());
-                recordArrayList.addAll(getFutureRecords(recordArrayList.get(recordArrayList.size()-1)));
+                recordArrayList.add(new Record(recordArrayList.get(recordArrayList.size()-1)));
+                //recordArrayList.addAll(getFutureRecords(recordArrayList.get(recordArrayList.size()-1)));
                 return END_PROGRESS;
             }
+
+
 
             @Override
             protected void onPostExecute(Integer integer) {
@@ -41,8 +44,6 @@ public class SQLUtil {
         }.execute();
 
     }
-
-
 
 
 

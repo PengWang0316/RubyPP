@@ -59,6 +59,31 @@
         android:layout_gravity="center"
         android:src="@drawable/ate_16"/>
 
+    <!--Add poop inside and peed inside-->
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/main_recycler_row_peed_inside"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginRight="2.5dp"
+        android:layout_marginEnd="2.5dp"
+        android:contentDescription="@string/picture_peed_inside"
+        android:layout_gravity="center"
+        android:src="@drawable/peed_inside_16"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/main_recycler_row_pooped_inside"
+        android:layout_marginLeft="2.5dp"
+        android:layout_marginStart="2.5dp"
+        android:layout_marginRight="2.5dp"
+        android:layout_marginEnd="2.5dp"
+        android:contentDescription="@string/picture_pooped_inside"
+        android:layout_gravity="center"
+        android:src="@drawable/pooped_inside_16" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

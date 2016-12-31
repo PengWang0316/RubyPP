@@ -64,6 +64,8 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
         private ImageView ateView;
         private TextView dateView;
         private TextView nameView;
+        private ImageView peedInsideView;
+        private ImageView poopedInsideView;
 
         private ArrayList<Record> recordArrayList;
         private RecyclerView.Adapter adapter;
@@ -79,6 +81,8 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
             dateView=(TextView)itemView.findViewById(R.id.main_recycler_row_date);
             indexView=(TextView)itemView.findViewById(R.id.main_recycler_row_index);
             nameView=(TextView)itemView.findViewById(R.id.main_recycler_row_name);
+            peedInsideView=(ImageView)itemView.findViewById(R.id.main_recycler_row_peed_inside);
+            poopedInsideView=(ImageView)itemView.findViewById(R.id.main_recycler_row_pooped_inside);
 
             //Setting up the click listener
             itemView.setOnClickListener(this);
@@ -133,6 +137,10 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
             else poopedView.setVisibility(View.INVISIBLE);
             if(record.isAte()) ateView.setVisibility(View.VISIBLE);
             else ateView.setVisibility(View.INVISIBLE);
+            if (record.isPeedInside()) peedInsideView.setVisibility(View.VISIBLE);
+            else peedInsideView.setVisibility(View.INVISIBLE);
+            if(record.isPoopedInside()) poopedInsideView.setVisibility(View.VISIBLE);
+            else poopedInsideView.setVisibility(View.INVISIBLE);
 
             //Set different background colors for record and future item.
 

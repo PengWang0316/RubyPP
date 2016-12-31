@@ -22,6 +22,8 @@
     <string name="input_name_empty_message">You have to enter your name</string>
     <string name="insert_record_finished_message">Insert Succeed</string>
     <string name="update_record_finished_message">Update Succeed</string>
+    <string name="picture_peed_inside">Peed Inside</string>
+    <string name="picture_pooped_inside">Pooped Inside</string>
 
     <!--Array list for update dialog-->
     <string-array name="update_dialog_array">
