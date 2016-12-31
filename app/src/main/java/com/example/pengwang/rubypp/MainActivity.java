@@ -3,6 +3,7 @@ package com.example.pengwang.rubypp;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.pengwang.rubypp.Fragments.AddRecordDialogFragment;
 import com.example.pengwang.rubypp.Fragments.InputNameDialog;
 import com.example.pengwang.rubypp.adapters.MainRecyclerViewAdapter;
 import com.example.pengwang.rubypp.dao.Record;
@@ -47,7 +49,27 @@ public class MainActivity extends AppCompatActivity {
         adapter = new MainRecyclerViewAdapter(recordArrayList);
         mainRecyclerView.setAdapter(adapter);
 
+        //set listener for float action button (use the same listener with recycle view)
+        setupListenrForFloatActionButton();
         findDefaultName();
+    }
+
+    private void setupListenrForFloatActionButton() {
+        findViewById(R.id.main_floating_action_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Log.d(TAG,"----------------------------------");
+                AddRecordDialogFragment dialogFragment=new AddRecordDialogFragment();
+//                dialogFragment.setHolder(null);
+                Record record=new Record();
+                record.setRecord(false);
+                dialogFragment.setRecord(record);
+                dialogFragment.setRecordArrayList(recordArrayList);
+                dialogFragment.setRecyclerView(mainRecyclerView);
+//                dialogFragment.setIndex(index);
+                dialogFragment.show(((AppCompatActivity)view.getContext()).getSupportFragmentManager(), "Insert Dialog Tag");
+            }
+        });
     }
 
     /*******

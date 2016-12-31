@@ -142,8 +142,8 @@ abstract class DatabaseAsyncTask extends AsyncTask<String,Integer,Integer> {
             writer.close();
             os.close();
             connection.connect();
-
-            Log.d("TAG","---------------------"+connection.getResponseMessage());
+            connection.getResponseMessage();
+//            Log.d("TAG","---------------------"+connection.getResponseMessage());
         } catch (IOException e) {
             e.printStackTrace();
         }finally {
@@ -204,15 +204,25 @@ abstract class DatabaseAsyncTask extends AsyncTask<String,Integer,Integer> {
         sb.append(URLEncoder.encode(record.isPooped()? STRING_TRUE : STRING_FALSE,UTF_8));
         sb.append(AND_MARK);
 
+        sb.append(URLEncoder.encode(Record.TITLE_IS_PEED_INSIDE, UTF_8));
+        sb.append(EQUAL_MARK);
+        sb.append(URLEncoder.encode(record.isPeedInside()? STRING_TRUE : STRING_FALSE,UTF_8));
+        sb.append(AND_MARK);
+
+        sb.append(URLEncoder.encode(Record.TITLE_IS_POOPED_INSIDE, UTF_8));
+        sb.append(EQUAL_MARK);
+        sb.append(URLEncoder.encode(record.isPoopedInside()? STRING_TRUE : STRING_FALSE,UTF_8));
+        sb.append(AND_MARK);
+
         sb.append(URLEncoder.encode(Record.TITLE_IS_ATE, UTF_8));
         sb.append(EQUAL_MARK);
         sb.append(URLEncoder.encode(record.isAte()? STRING_TRUE : STRING_FALSE,UTF_8));
         sb.append(AND_MARK);
 
-        sb.append(URLEncoder.encode(Record.TITLE_SPOUSE_TIME, UTF_8));
-        sb.append(EQUAL_MARK);
-        sb.append(URLEncoder.encode(record.getSpouseTime(),UTF_8));
-        sb.append(AND_MARK);
+//        sb.append(URLEncoder.encode(Record.TITLE_SPOUSE_TIME, UTF_8));
+//        sb.append(EQUAL_MARK);
+//        sb.append(URLEncoder.encode(record.getSpouseTime(),UTF_8));
+//        sb.append(AND_MARK);
 
         sb.append(URLEncoder.encode(Record.TITLE_DATE, UTF_8));
         sb.append(EQUAL_MARK);
@@ -289,13 +299,13 @@ abstract class DatabaseAsyncTask extends AsyncTask<String,Integer,Integer> {
             record.setId(newJson.getString(Record.ID));
             record.setTime(newJson.getString(Record.TITLE_TIME));
             record.setDate(newJson.getString(Record.TITLE_DATE));
-            record.setSpouseTime(newJson.getString(Record.TITLE_SPOUSE_TIME));
+//            record.setSpouseTime(newJson.getString(Record.TITLE_SPOUSE_TIME));
             record.setName(newJson.getString(Record.TITLE_NAME));
             record.setPeed(newJson.getInt(Record.TITLE_IS_PEED)==INT_TRUE);
             record.setPooped(newJson.getInt(Record.TITLE_IS_POOPED)==INT_TRUE);
             record.setAte(newJson.getInt(Record.TITLE_IS_ATE)==INT_TRUE);
-            record.setPeedInside(newJson.getInt(Record.TITLE_IS_PEED_inside)==INT_TRUE);
-            record.setPoopedInside(newJson.getInt(Record.TITLE_IS_POOPED_inside)==INT_TRUE);
+            record.setPeedInside(newJson.getInt(Record.TITLE_IS_PEED_INSIDE)==INT_TRUE);
+            record.setPoopedInside(newJson.getInt(Record.TITLE_IS_POOPED_INSIDE)==INT_TRUE);
             newRecordArrayList.add(record);
         }
 

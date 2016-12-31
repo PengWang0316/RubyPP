@@ -8,7 +8,7 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
 
-    <string name="update_dialog_title">What Ruby did around</string>
+    <string name="update_dialog_title">What Ruby did</string>
     <string name="main_action_menu_refresh">Refresh</string>
     <string name="peed">Peed</string>
     <string name="pooped">Pooped</string>
@@ -24,12 +24,15 @@
     <string name="update_record_finished_message">Update Succeed</string>
     <string name="picture_peed_inside">Peed Inside</string>
     <string name="picture_pooped_inside">Pooped Inside</string>
+    <string name="date_picker_dialog_title">Pick up the right date</string>
 
     <!--Array list for update dialog-->
     <string-array name="update_dialog_array">
         <item>Peed</item>
         <item>Pooped</item>
         <item>Ate</item>
+        <item>Peed Inside</item>
+        <item>Pooped Inside</item>
     </string-array>
 
 </resources>

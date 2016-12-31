@@ -38,6 +38,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
     /**Creating a new holder when there is no one can be used**/
     public MainRecyclerViewAdapter.RecordHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View inflateView = LayoutInflater.from(parent.getContext()).inflate(R.layout.main_recycler_row_item,parent,false);
+
         return new RecordHolder(inflateView);
     }
 
@@ -54,9 +55,11 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
         return recordArrayList.size();
     }
 
+
     //View holder and onClick listenter
     public static class RecordHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private final static String TAG = "recyclerview.viewholder";
+        private static final String UPDATE_DIALOG_TAG = "UpdateDialogTag";
         private TextView timeView;
         private TextView indexView;
         private ImageView peedView;
@@ -85,7 +88,8 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
             poopedInsideView=(ImageView)itemView.findViewById(R.id.main_recycler_row_pooped_inside);
 
             //Setting up the click listener
-            itemView.setOnClickListener(this);
+
+//            itemView.setOnClickListener(this);
         }
 
         @Override
@@ -109,13 +113,13 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
             dialogFragment.setHolder(this);
             dialogFragment.setRecord(recordArrayList.get(index));
             dialogFragment.setIndex(index);
-            dialogFragment.show(((AppCompatActivity)view.getContext()).getSupportFragmentManager(),"UpdateDialogTag");
-            Log.d(TAG,"----------------Adding a new record----------------");
+            dialogFragment.show(((AppCompatActivity)view.getContext()).getSupportFragmentManager(), UPDATE_DIALOG_TAG);
+//            Log.d(TAG,"----------------Adding a new record----------------");
 
         }
 
         public void callBackAddNewRecord(int index){
-            Log.d(TAG,"----------------callBackAddNewRecord----------------");
+//            Log.d(TAG,"----------------callBackAddNewRecord----------------");
             adapter.notifyItemChanged(index);
         }
 
@@ -143,9 +147,15 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
             else poopedInsideView.setVisibility(View.INVISIBLE);
 
             //Set different background colors for record and future item.
+            //and set the listener here
 
-            if(record.isRecord()) view.setBackgroundColor(ContextCompat.getColor(view.getContext(),R.color.record_background));
-            else view.setBackgroundColor(ContextCompat.getColor(view.getContext(),R.color.future_item_background));
+            if(record.isRecord()){
+                itemView.setOnClickListener(this);
+                view.setBackgroundColor(ContextCompat.getColor(view.getContext(),R.color.record_background));
+            } else{
+                view.setBackgroundColor(ContextCompat.getColor(view.getContext(),R.color.future_item_background));
+                itemView.setOnClickListener(null);
+            }
             /*
             if(record.isRecord()) timeView.setTextColor(Color.GREEN);
             else timeView.setTextColor(Color.GRAY);*/

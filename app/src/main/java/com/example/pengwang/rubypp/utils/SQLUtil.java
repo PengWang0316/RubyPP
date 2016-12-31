@@ -61,7 +61,7 @@ public class SQLUtil {
         }.execute();
     }
 
-    public static void insertRecord(Record record,Activity activity) {
+    public static void insertRecord(Record record, Activity activity, final RecyclerView mainRecyclerView, final ArrayList recordArrayList, final RecyclerView.Adapter adapter) {
        //Log.d(TAG,"---------------Inserted Record---------------------");
         new DatabaseAsyncTask(record, activity){
 
@@ -70,6 +70,12 @@ public class SQLUtil {
                 setMessage(activity.getResources().getString(R.string.insert_record_finished_message));
                 insertRecordToDatabase(record);
                 return END_PROGRESS;
+            }
+
+            @Override
+            protected void onPostExecute(Integer integer) {
+                super.onPostExecute(integer);
+                refreshView(mainRecyclerView,recordArrayList,adapter);
             }
         }.execute();
     }

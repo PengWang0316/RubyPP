@@ -15,7 +15,7 @@ import java.util.HashMap;
 public class Record {
 
 
-    private static final String NEXT_TIME_SHOULD_BE = "Next time should be ";
+//    private static final String NEXT_TIME_SHOULD_BE = "Next time should be ";
 
     private String id="";
     private String time="";
@@ -23,7 +23,7 @@ public class Record {
     private boolean isPooped=false;
     private boolean isAte=false;
     private String date="";
-    private String spouseTime="";
+//    private String spouseTime="";
     private boolean isRecord=true;
     private String name="--";
     private boolean peedInside=false;
@@ -44,13 +44,13 @@ public class Record {
     public static final String ID ="id" ;
     public final static String TITLE_TIME="time";
     public final static String TITLE_DATE="date";
-    public final static String TITLE_SPOUSE_TIME="spouseTime";
+//    public final static String TITLE_SPOUSE_TIME="spouseTime";
     public final static String TITLE_IS_PEED="isPeed";
     public final static String TITLE_IS_POOPED="isPooped";
     public final static String TITLE_IS_ATE="isAte";
     public final static String TITLE_NAME="name";
-    public final static String TITLE_IS_PEED_inside="isPeedInside";
-    public final static String TITLE_IS_POOPED_inside="isPoopedInside";
+    public final static String TITLE_IS_PEED_INSIDE="isPeedInside";
+    public final static String TITLE_IS_POOPED_INSIDE="isPoopedInside";
 
     //private static final String TIME_FORMAT = "HH:mm";
     //private final static SimpleDateFormat timeFormat=new SimpleDateFormat(TIME_FORMAT);
@@ -207,13 +207,13 @@ public class Record {
     }
 
 
-    public String getSpouseTime() {
-        return spouseTime;
-    }
-
-    public void setSpouseTime(String spouseTime) {
-        this.spouseTime = spouseTime;
-    }
+//    public String getSpouseTime() {
+//        return spouseTime;
+//    }
+//
+//    public void setSpouseTime(String spouseTime) {
+//        this.spouseTime = spouseTime;
+//    }
 
     public boolean isRecord() {
         return isRecord;

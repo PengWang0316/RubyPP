@@ -3,7 +3,7 @@
     include 'QueryBasicParameters.php';
 
 
-	mysql_query("UPDATE schedule SET name = '$name', time='$time', isPeed='$isPeed', isPooped='$isPooped', isAte='$isAte' WHERE date ='$date' and spouseTime='$spouseTime'",$con);
+	mysql_query("UPDATE schedule SET name = '$name', time='$time', date='$date', isPeed='$isPeed', isPooped='$isPooped', isAte='$isAte', isPeedInside='$isPeedInside', isPoopedInside='$isPoopedInside' WHERE id ='$id'",$con);
 
 	mysql_close($con);
 ?>
