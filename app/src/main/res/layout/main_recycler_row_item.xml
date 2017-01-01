@@ -57,7 +57,7 @@
         android:layout_marginStart="2.5dp"
         android:contentDescription="@string/picture_ate"
         android:layout_gravity="center"
-        android:src="@drawable/ate_16"/>
+        android:src="@drawable/ate_a_16"/>
 
     <!--Add poop inside and peed inside-->
     <ImageView
