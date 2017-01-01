@@ -47,7 +47,7 @@
         android:layout_marginEnd="2.5dp"
         android:contentDescription="@string/picture_pooped"
         android:layout_gravity="center"
-        android:src="@drawable/pooped_16" />
+        android:src="@drawable/pooped_a_16" />
 
     <ImageView
         android:layout_width="wrap_content"
