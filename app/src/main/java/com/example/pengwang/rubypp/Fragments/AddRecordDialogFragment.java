@@ -192,13 +192,38 @@ public class AddRecordDialogFragment extends DialogFragment {
                 }
                 else {
                     record.setRecord(true);
+                    //Use  print mysql_insert_id(); in php file return id
                     SQLUtil.insertRecord(record,activity,mainRecyclerView,recordArrayList,mainRecyclerView.getAdapter());
+                    //Notify adapter what is inserted and what should be changed
+                    setupNewAdapter();
                 }
 
             }
         },year,month,day);
         datePickerDialog.setTitle(R.string.date_picker_dialog_title);
         datePickerDialog.show();
+    }
+
+    /*******
+     * remove old p
+     */
+    private void setupNewAdapter() {
+
+        RecyclerView.Adapter adapter=mainRecyclerView.getAdapter();
+        int lastPosition=recordArrayList.size()-1;
+        recordArrayList.remove(lastPosition);
+//        adapter.notifyItemRemoved(lastPosition);
+//        adapter.notifyItemRangeChanged(lastPosition,adapter.getItemCount());
+
+        recordArrayList.add(record);
+        recordArrayList.add(new Record(record));
+        lastPosition=recordArrayList.size()-1;
+//                    mainRecyclerView.getAdapter().notifyItemRangeInserted(recordArrayList.size()-1,recordArrayList.size()+1);
+//        adapter.notifyItemRangeInserted(lastPosition-1,2);
+////        adapter.notifyItemChanged(recordArrayListSize-1);
+//        adapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();
+        mainRecyclerView.scrollToPosition(lastPosition);
     }
 
 

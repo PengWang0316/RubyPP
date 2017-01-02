@@ -3,7 +3,6 @@ package com.example.pengwang.rubypp.utils;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -29,7 +28,6 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Random;
 
 /**
  * Created by Peng on 12/20/2016.
@@ -97,16 +95,16 @@ abstract class DatabaseAsyncTask extends AsyncTask<String,Integer,Integer> {
         progressBar.setMax(values[1]);
         progressBar.setProgress(values[0]);
     }
-
+    //Use  print mysql_insert_id(); in php file return id
     void insertRecordToDatabase(Record record){
-        conncetToPhpScript(record, INSERT_PHP_URL);
+        conncetToPhpScript(record, INSERT_PHP_URL,true);
     }
 
     void updateRecordToDatabase(Record record){
-        conncetToPhpScript(record,UPDATE_PHP_URL);
+        conncetToPhpScript(record,UPDATE_PHP_URL,false);
     }
 
-    private void conncetToPhpScript(Record record,String Url) {
+    private void conncetToPhpScript(Record record,String Url,boolean isInsert) {
         //Random random = new Random();
         URL url = null;
         try {
@@ -137,6 +135,8 @@ abstract class DatabaseAsyncTask extends AsyncTask<String,Integer,Integer> {
             e.printStackTrace();
         }
 
+//        insert method need to read a id back
+
         try {
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, UTF_8));
             writer.write(getQuery(record));
@@ -144,36 +144,38 @@ abstract class DatabaseAsyncTask extends AsyncTask<String,Integer,Integer> {
             writer.close();
             os.close();
             connection.connect();
-            connection.getResponseMessage();
+            if (!isInsert) connection.getResponseMessage();
 //            Log.d("TAG","---------------------"+connection.getResponseMessage());
         } catch (IOException e) {
-            e.printStackTrace();
-        }finally {
             connection.disconnect();
+            e.printStackTrace();
         }
 
-        /*for test
-        String line=null;
-        InputStream inputStream= null;
-        try {
-            inputStream = new BufferedInputStream(connection.getInputStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        //Start to read the content
-        BufferedReader bufferedReader=new BufferedReader(new InputStreamReader(inputStream));
-        StringBuilder sb=new StringBuilder();
-        try {
-            while ((line=bufferedReader.readLine())!=null){
-                sb.append(line).append("\n");
+        //Read id for the new insert record in order to update
+        if (isInsert) {
+            String line = null;
+            InputStream inputStream = null;
+            try {
+                inputStream = new BufferedInputStream(connection.getInputStream());
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            inputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            //Start to read the content
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            StringBuilder sb = new StringBuilder();
+            try {
+                while ((line = bufferedReader.readLine()) != null) {
+                    sb.append(line);
+                }
+                inputStream.close();
+            } catch (IOException e) {
+                connection.disconnect();
+                e.printStackTrace();
+            }
+            record.setId(sb.toString());
+
         }
-        String result=sb.toString();
         connection.disconnect();
-        */
     }
 
 

@@ -75,7 +75,8 @@ public class SQLUtil {
             @Override
             protected void onPostExecute(Integer integer) {
                 super.onPostExecute(integer);
-                refreshView(mainRecyclerView,recordArrayList,adapter);
+//                refreshView(mainRecyclerView,recordArrayList,adapter);
+
             }
         }.execute();
     }
