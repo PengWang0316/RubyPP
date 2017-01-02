@@ -40,7 +40,8 @@ abstract class DatabaseAsyncTask extends AsyncTask<String,Integer,Integer> {
     private static final int START_PROGRESS = 0;
     private final static int NUMBER_OF_ITEM_FOR_FUTURE=5;
     static final int END_PROGRESS = 5;
-    private static final String GET_INITIAL_URL = "http://pengwang.freeoda.com/GetInitialRecords.php";
+    //TODO change back to the normal url
+    private static final String GET_INITIAL_URL = "http://pengwang.freeoda.com/GetInitialRecordsTest.php";
     private static final int INT_TRUE = 1;
     private static final String UPDATE_PHP_URL = "http://pengwang.freeoda.com/UpdateRecord.php";
     private static final String CONTENT_TYPE = "Content-Type";
@@ -53,7 +54,8 @@ abstract class DatabaseAsyncTask extends AsyncTask<String,Integer,Integer> {
     private static final String POST = "POST";
     private static final String STRING_TRUE = "1";
     private static final String STRING_FALSE = "0";
-    private static final String INSERT_PHP_URL = "http://pengwang.freeoda.com/InsertNewRecord.php";
+    //TODO change back to the normal url
+    private static final String INSERT_PHP_URL = "http://pengwang.freeoda.com/InsertNewRecordTest.php";
     Activity activity;
     Record record;
     //private final static String TAG="DatabaseAsyncTask";

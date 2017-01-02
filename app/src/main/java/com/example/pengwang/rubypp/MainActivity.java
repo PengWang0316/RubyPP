@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -17,6 +18,7 @@ import android.view.View;
 import com.example.pengwang.rubypp.Fragments.AddRecordDialogFragment;
 import com.example.pengwang.rubypp.Fragments.InputNameDialog;
 import com.example.pengwang.rubypp.adapters.MainRecyclerViewAdapter;
+import com.example.pengwang.rubypp.adapters.MyItemAnimator;
 import com.example.pengwang.rubypp.dao.Record;
 import com.example.pengwang.rubypp.decorations.VerticalSpaceItemDecoration;
 import com.example.pengwang.rubypp.utils.SQLUtil;
@@ -43,11 +45,13 @@ public class MainActivity extends AppCompatActivity {
 
         //Setting up the recycler view
         mainRecyclerView=(RecyclerView) findViewById(R.id.main_recycler_view);
+        mainRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mainLinerLayoutManager = new LinearLayoutManager(this);
         mainRecyclerView.setLayoutManager(mainLinerLayoutManager);
         mainRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration());
         adapter = new MainRecyclerViewAdapter(recordArrayList);
         mainRecyclerView.setAdapter(adapter);
+        mainRecyclerView.setItemAnimator(new MyItemAnimator());
 
         //set listener for float action button (use the same listener with recycle view)
         setupListenrForFloatActionButton();

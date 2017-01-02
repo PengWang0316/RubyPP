@@ -1,7 +1,7 @@
 <?php
 include ('MySqlHostInfo.php');
 
-$r=mysql_query("SELECT * FROM schedule ORDER BY DATE DESC, TIME DESC LIMIT 25");
+$r=mysql_query("SELECT * FROM schedule_test ORDER BY DATE DESC, TIME DESC LIMIT 25");
 $index=0;
 while($row=mysql_fetch_array($r))
    {
