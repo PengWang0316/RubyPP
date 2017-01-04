@@ -39,8 +39,9 @@ abstract class DatabaseAsyncTask extends AsyncTask<String,Integer,Integer> {
     private final static int NUMBER_OF_ITEM_FOR_FUTURE=5;
     static final int END_PROGRESS = 5;
     //TODO change back to the normal url
-    private static final String GET_INITIAL_URL = "http://pengwang.freeoda.com/GetInitialRecordsTest.php";
+    private static final String GET_INITIAL_URL = "http://pengwang.freeoda.com/GetInitialRecords.php";
     private static final int INT_TRUE = 1;
+    //TODO change back to the normal url
     private static final String UPDATE_PHP_URL = "http://pengwang.freeoda.com/UpdateRecord.php";
     private static final String CONTENT_TYPE = "Content-Type";
     private static final String APPLICATION_JSON = "application/json";
@@ -53,11 +54,12 @@ abstract class DatabaseAsyncTask extends AsyncTask<String,Integer,Integer> {
     private static final String STRING_TRUE = "1";
     private static final String STRING_FALSE = "0";
     //TODO change back to the normal url
-    private static final String INSERT_PHP_URL = "http://pengwang.freeoda.com/InsertNewRecordTest.php";
+    private static final String INSERT_PHP_URL = "http://pengwang.freeoda.com/InsertNewRecord.php";
     Activity activity;
     Record record;
     //private final static String TAG="DatabaseAsyncTask";
     private String message;
+    private boolean isShowSnackbar=true;
 
     private String getMessage() {
         return message==null?activity.getResources().getString(R.string.default_database_message):message;
@@ -86,7 +88,7 @@ abstract class DatabaseAsyncTask extends AsyncTask<String,Integer,Integer> {
         super.onPostExecute(integer);
         activity.findViewById(R.id.main_progress_bar).setVisibility(View.INVISIBLE);
         //use a snackbar to show it is finished
-        showSnackbar();
+        if (isShowSnackbar) showSnackbar();
     }
 
     @Override
@@ -318,6 +320,10 @@ abstract class DatabaseAsyncTask extends AsyncTask<String,Integer,Integer> {
 
     private void showSnackbar() {
         Snackbar.make(activity.findViewById(R.id.activity_main),getMessage(),Snackbar.LENGTH_SHORT).show();
+    }
+
+    public void setShowSnackbar(boolean showSnackbar) {
+        isShowSnackbar = showSnackbar;
     }
 /**
     private void testSleep(){

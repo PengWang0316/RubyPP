@@ -208,21 +208,35 @@ public class AddRecordDialogFragment extends DialogFragment {
      * remove old p
      */
     private void setupNewAdapter() {
-
-        RecyclerView.Adapter adapter=mainRecyclerView.getAdapter();
         int lastPosition=recordArrayList.size()-1;
+        MainRecyclerViewAdapter adapter=(MainRecyclerViewAdapter) mainRecyclerView.getAdapter();
+//        adapter.notifyItemInserted(lastPosition-1);
+
         recordArrayList.remove(lastPosition);
-//        adapter.notifyItemRemoved(lastPosition);
+
+        adapter.notifyItemRemoved(lastPosition);
+
 //        adapter.notifyItemRangeChanged(lastPosition,adapter.getItemCount());
 
         recordArrayList.add(record);
+
+        adapter.notifyItemInserted(recordArrayList.size()-1);
+
         recordArrayList.add(new Record(record));
         lastPosition=recordArrayList.size()-1;
 //                    mainRecyclerView.getAdapter().notifyItemRangeInserted(recordArrayList.size()-1,recordArrayList.size()+1);
 //        adapter.notifyItemRangeInserted(lastPosition-1,2);
-////        adapter.notifyItemChanged(recordArrayListSize-1);
+
+        adapter.notifyItemInserted(lastPosition);
+
 //        adapter.notifyDataSetChanged();
-        adapter.notifyDataSetChanged();
+//        adapter.notifyDataSetChanged();
+        int endOfArraylist=recordArrayList.size();
+        ArrayList<Integer> newInsertedPositionList=new ArrayList();
+        newInsertedPositionList.add(endOfArraylist);
+        newInsertedPositionList.add(--endOfArraylist);
+        newInsertedPositionList.add(--endOfArraylist);
+        adapter.setNewInsertedPosition(newInsertedPositionList);
         mainRecyclerView.scrollToPosition(lastPosition);
     }
 

@@ -3,13 +3,11 @@ package com.example.pengwang.rubypp;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,12 +16,15 @@ import android.view.View;
 import com.example.pengwang.rubypp.Fragments.AddRecordDialogFragment;
 import com.example.pengwang.rubypp.Fragments.InputNameDialog;
 import com.example.pengwang.rubypp.adapters.MainRecyclerViewAdapter;
-import com.example.pengwang.rubypp.adapters.MyItemAnimator;
 import com.example.pengwang.rubypp.dao.Record;
 import com.example.pengwang.rubypp.decorations.VerticalSpaceItemDecoration;
 import com.example.pengwang.rubypp.utils.SQLUtil;
 
 import java.util.ArrayList;
+
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
+import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator;
 
 public class MainActivity extends AppCompatActivity {
     private final static String TAG = "MainActivity";
@@ -50,8 +51,14 @@ public class MainActivity extends AppCompatActivity {
         mainRecyclerView.setLayoutManager(mainLinerLayoutManager);
         mainRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration());
         adapter = new MainRecyclerViewAdapter(recordArrayList);
+
+//        use recyclerview-animators library to do the animation job
+//        AlphaInAnimationAdapter animationAdapter=new AlphaInAnimationAdapter(adapter);
+//        animationAdapter.setDuration(1000);
         mainRecyclerView.setAdapter(adapter);
-        mainRecyclerView.setItemAnimator(new MyItemAnimator());
+        FadeInLeftAnimator animator=new FadeInLeftAnimator();
+//        animator.setInterpolator(new OvershootInterpolator());
+        mainRecyclerView.setItemAnimator(animator);
 
         //set listener for float action button (use the same listener with recycle view)
         setupListenrForFloatActionButton();

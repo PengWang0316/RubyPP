@@ -6,6 +6,7 @@ import android.util.Log;
 
 /**
  * Created by Peng on 1/1/2017.
+ * Do not use it yet.
  */
 
 public class MyItemAnimator extends SimpleItemAnimator {

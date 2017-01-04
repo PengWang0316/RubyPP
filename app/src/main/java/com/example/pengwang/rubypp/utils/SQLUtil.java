@@ -67,6 +67,8 @@ public class SQLUtil {
 
             @Override
             protected Integer doInBackground(String... strings) {
+//                do not show the snack bar
+                setShowSnackbar(false);
                 setMessage(activity.getResources().getString(R.string.insert_record_finished_message));
                 insertRecordToDatabase(record);
                 return END_PROGRESS;

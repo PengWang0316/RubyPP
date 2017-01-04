@@ -1,15 +1,21 @@
 package com.example.pengwang.rubypp.adapters;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +24,8 @@ import com.example.pengwang.rubypp.R;
 import com.example.pengwang.rubypp.dao.Record;
 
 import java.util.ArrayList;
+
+import jp.wasabeef.recyclerview.internal.ViewHelper;
 
 /**
  * Created by Peng on 12/15/2016.
@@ -29,6 +37,9 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
     private static final String FUTURE_VIEW_OBJECT = "futureView";
     //private static final String TAG = "MainRecyclerViewAdapter";
     private ArrayList<Record> recordArrayList;
+    private int mLastPosition=-1;
+    private ArrayList<Integer> newInsertedPositionList=new ArrayList<>();
+
 
     public MainRecyclerViewAdapter(ArrayList<Record> recordArrayList){
         this.recordArrayList=recordArrayList;
@@ -48,11 +59,44 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
         holder.bindData(recordArrayList.get(position),holder.itemView, position);
         holder.setRecordArryList(recordArrayList);
         holder.setAdapter(this);
+
+//        do some animations for this view
+
+        if (newInsertedPositionList.size()>0){
+            for (Integer index:newInsertedPositionList){
+                if (position==index){
+                    newInsertedPositionList.remove(index);
+                    return;
+                }
+            }
+        }
+        setupAnimationForViewItem(holder.itemView);
+    }
+
+    private void setupAnimationForViewItem(View itemView) {
+        itemView.setAlpha(0);
+        itemView.setScaleX(0.5f);
+        itemView.setScaleY(0);
+        /**
+         * use code to do
+         * ViewCompat.animate(holder.itemView).alpha(1).scaleX(1).scaleY(1).setDuration(500).start();
+         */
+
+        /**
+         * use xml
+         */
+        Animator animator= AnimatorInflater.loadAnimator(itemView.getContext(),R.animator.recycler_view_item);
+        animator.setTarget(itemView);
+        animator.start();
     }
 
     @Override
     public int getItemCount() {
         return recordArrayList.size();
+    }
+
+    public void setNewInsertedPosition(ArrayList<Integer> newInsertedPositionList) {
+        this.newInsertedPositionList=newInsertedPositionList;
     }
 
 
