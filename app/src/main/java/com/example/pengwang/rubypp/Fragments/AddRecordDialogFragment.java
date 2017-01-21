@@ -59,6 +59,8 @@ public class AddRecordDialogFragment extends DialogFragment {
     private static final int DAY_END_INDEX = 10;
     private static final String HYPHEN = "-";
     private static final int INT_ONE = 1;
+    public static final String UPDATE_DIALOG_TAG = "UpdateDialogTag";
+    public static final String INSERT_DIALOG_TAG = "Insert Dialog Tag";
     private SparseBooleanArray booleanArray;
     private  Record record;
     private  MainRecyclerViewAdapter.RecordHolder holder;

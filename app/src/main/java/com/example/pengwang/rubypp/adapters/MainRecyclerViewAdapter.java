@@ -157,7 +157,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
             dialogFragment.setHolder(this);
             dialogFragment.setRecord(recordArrayList.get(index));
             dialogFragment.setIndex(index);
-            dialogFragment.show(((AppCompatActivity)view.getContext()).getSupportFragmentManager(), UPDATE_DIALOG_TAG);
+            dialogFragment.show(((AppCompatActivity)view.getContext()).getSupportFragmentManager(), AddRecordDialogFragment.UPDATE_DIALOG_TAG);
 //            Log.d(TAG,"----------------Adding a new record----------------");
 
         }

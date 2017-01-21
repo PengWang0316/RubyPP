@@ -2,14 +2,18 @@ package com.example.pengwang.rubypp.utils;
 
 import android.app.Activity;
 import android.os.AsyncTask;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.example.pengwang.rubypp.Fragments.ShowStatisticDialog;
 import com.example.pengwang.rubypp.R;
 import com.example.pengwang.rubypp.dao.Record;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Peng on 12/16/2016.
@@ -22,34 +26,32 @@ public class SQLUtil {
 
 
     //Getting records from the database.
-    public static void getInitialRecordsFromDatabase(final RecyclerView recyclerView,final ArrayList<Record> recordArrayList) {
-        new DatabaseAsyncTask(null,(Activity) recyclerView.getContext()){
+    public static void getInitialRecordsFromDatabase(final RecyclerView recyclerView, final ArrayList<Record> recordArrayList) {
+        new DatabaseAsyncTask(null, (Activity) recyclerView.getContext()) {
 
             @Override
             protected Integer doInBackground(String... strings) {
                 setMessage(activity.getResources().getString(R.string.get_information_finished_message));
                 recordArrayList.addAll(getRecordsFromDatabase());
-                recordArrayList.add(new Record(recordArrayList.get(recordArrayList.size()-1)));
+                recordArrayList.add(new Record(recordArrayList.get(recordArrayList.size() - 1)));
                 //recordArrayList.addAll(getFutureRecords(recordArrayList.get(recordArrayList.size()-1)));
                 return END_PROGRESS;
             }
 
 
-
             @Override
             protected void onPostExecute(Integer integer) {
                 super.onPostExecute(integer);
-                recyclerView.scrollToPosition(recordArrayList.size()-1);
+                recyclerView.scrollToPosition(recordArrayList.size() - 1);
             }
         }.execute();
 
     }
 
 
-
-    public static void updateRecord(Record record,Activity activity) {
+    public static void updateRecord(Record record, Activity activity) {
         //Log.d(TAG,"---------------Updated Record---------------------");
-        new DatabaseAsyncTask(record, activity){
+        new DatabaseAsyncTask(record, activity) {
 
             @Override
             protected Integer doInBackground(String... strings) {
@@ -62,8 +64,8 @@ public class SQLUtil {
     }
 
     public static void insertRecord(Record record, Activity activity, final RecyclerView mainRecyclerView, final ArrayList recordArrayList, final RecyclerView.Adapter adapter) {
-       //Log.d(TAG,"---------------Inserted Record---------------------");
-        new DatabaseAsyncTask(record, activity){
+        //Log.d(TAG,"---------------Inserted Record---------------------");
+        new DatabaseAsyncTask(record, activity) {
 
             @Override
             protected Integer doInBackground(String... strings) {
@@ -85,9 +87,35 @@ public class SQLUtil {
 
     public static void refreshView(RecyclerView mainRecyclerView, ArrayList<Record> recordArrayList, RecyclerView.Adapter adapter) {
         recordArrayList.clear();
-        getInitialRecordsFromDatabase(mainRecyclerView,recordArrayList);
+        getInitialRecordsFromDatabase(mainRecyclerView, recordArrayList);
 
         //**********this should be refreshed in a call back after get data from database
         adapter.notifyDataSetChanged();
     }
+
+    public static void getStatisticDate(Activity activity, final FragmentManager fragmentManager) {
+        new DatabaseAsyncTask(null, activity) {
+            Map<String, Integer> statisticMap;
+
+            @Override
+            protected Integer doInBackground(String... strings) {
+//                do not show the snack bar
+                setShowSnackbar(false);
+//                setMessage(activity.getResources().getString(R.string.insert_record_finished_message));
+                statisticMap = getStatisticDate();
+                return END_PROGRESS;
+            }
+
+            @Override
+            protected void onPostExecute(Integer integer) {
+                super.onPostExecute(integer);
+                ShowStatisticDialog dialog = new ShowStatisticDialog();
+                dialog.setStatisticMap(statisticMap);
+                dialog.show(fragmentManager, ShowStatisticDialog.TAG);
+
+            }
+        }.execute();
+    }
+
+
 }

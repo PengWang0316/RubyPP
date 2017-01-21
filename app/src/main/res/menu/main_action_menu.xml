@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--<a href="https://icons8.com/web-app/5777/Recurring-Appointment">Recurring appointment and other flat icons</a>-->
 <menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/main_action_menu_medal"
+          android:icon="@drawable/medal_16"
+          android:title="@string/main_action_menu_medal"
+          app:showAsAction="ifRoom"/>
     <item android:id="@+id/main_action_menu_refresh"
         android:icon="@drawable/recurring_16"
         android:title="@string/main_action_menu_refresh"

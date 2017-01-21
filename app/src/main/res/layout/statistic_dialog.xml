@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<a href="https://icons8.com/web-app/17912/Medal">Medal icon credits</a>-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="10dp"
+              android:layout_marginStart="10dp"
+              android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/statistic_dialog_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="20dp"/>
+
+    <TextView
+        android:id="@+id/statistic_dialog_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="5dp"/>
+
+    <ImageView
+        android:id="@+id/statistic_dialog_medal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:src="@drawable/trophy_24"
+        android:visibility="invisible"/>
+
+</LinearLayout>

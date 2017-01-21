@@ -1,6 +1,7 @@
 package com.example.pengwang.rubypp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import android.view.View;
 
 import com.example.pengwang.rubypp.Fragments.AddRecordDialogFragment;
 import com.example.pengwang.rubypp.Fragments.InputNameDialog;
+import com.example.pengwang.rubypp.Fragments.ShowStatisticDialog;
 import com.example.pengwang.rubypp.adapters.MainRecyclerViewAdapter;
 import com.example.pengwang.rubypp.dao.Record;
 import com.example.pengwang.rubypp.decorations.VerticalSpaceItemDecoration;
@@ -28,6 +30,7 @@ import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator;
 
 public class MainActivity extends AppCompatActivity {
     private final static String TAG = "MainActivity";
+//    private static final String INSERT_DIALOG_TAG = "Insert Dialog Tag";
     private RecyclerView mainRecyclerView;
     private LinearLayoutManager mainLinerLayoutManager;
     private ArrayList<Record> recordArrayList = new ArrayList<Record>();
@@ -41,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Setting action bar
-        Toolbar myToolBar = (Toolbar)findViewById(R.id.maim_tool_bar);
+        Toolbar myToolBar = (Toolbar)findViewById(R.id.main_tool_bar);
         setSupportActionBar(myToolBar);
 
         //Setting up the recycler view
@@ -78,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 dialogFragment.setRecordArrayList(recordArrayList);
                 dialogFragment.setRecyclerView(mainRecyclerView);
 //                dialogFragment.setIndex(index);
-                dialogFragment.show(((AppCompatActivity)view.getContext()).getSupportFragmentManager(), "Insert Dialog Tag");
+                dialogFragment.show(getSupportFragmentManager(), AddRecordDialogFragment.INSERT_DIALOG_TAG);
             }
         });
     }
@@ -132,9 +135,18 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.main_action_menu_refresh:
                 SQLUtil.refreshView(mainRecyclerView,recordArrayList,adapter);
+                break;
                 //SQLUtil.getInitialRecordsFromDatabase();
+            case R.id.main_action_menu_medal:
+                showStatistic();
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showStatistic() {
+        SQLUtil.getStatisticDate(this,getSupportFragmentManager());
+
     }
 
     /**************************

@@ -25,6 +25,8 @@
     <string name="picture_peed_inside">Peed Inside</string>
     <string name="picture_pooped_inside">Pooped Inside</string>
     <string name="date_picker_dialog_title">Pick up the right date</string>
+    <string name="main_action_menu_medal">Statistic</string>
+    <string name="statistic_dialog_title">The medal belongs</string>
 
     <!--Array list for update dialog-->
     <string-array name="update_dialog_array">

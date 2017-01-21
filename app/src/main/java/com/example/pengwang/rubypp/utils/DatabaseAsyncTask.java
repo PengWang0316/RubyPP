@@ -28,15 +28,17 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Created by Peng on 12/20/2016.
- *
  */
 
-abstract class DatabaseAsyncTask extends AsyncTask<String,Integer,Integer> {
+abstract class DatabaseAsyncTask extends AsyncTask<String, Integer, Integer> {
     private static final int START_PROGRESS = 0;
-    private final static int NUMBER_OF_ITEM_FOR_FUTURE=5;
+    private final static int NUMBER_OF_ITEM_FOR_FUTURE = 5;
     static final int END_PROGRESS = 5;
     //TODO change back to the normal url
     private static final String GET_INITIAL_URL = "http://pengwang.freeoda.com/GetInitialRecords.php";
@@ -55,30 +57,31 @@ abstract class DatabaseAsyncTask extends AsyncTask<String,Integer,Integer> {
     private static final String STRING_FALSE = "0";
     //TODO change back to the normal url
     private static final String INSERT_PHP_URL = "http://pengwang.freeoda.com/InsertNewRecord.php";
+    private static final String GET_STATISTIC_URL = "http://pengwang.freeoda.com/GetStatistic.php";
     Activity activity;
     Record record;
     //private final static String TAG="DatabaseAsyncTask";
     private String message;
-    private boolean isShowSnackbar=true;
+    private boolean isShowSnackbar = true;
 
     private String getMessage() {
-        return message==null?activity.getResources().getString(R.string.default_database_message):message;
+        return message == null ? activity.getResources().getString(R.string.default_database_message) : message;
     }
-
 
 
     void setMessage(String message) {
         this.message = message;
     }
 
-    DatabaseAsyncTask(Record record,Activity activity){
-        this.activity=activity;
-        this.record=record;
+    DatabaseAsyncTask(Record record, Activity activity) {
+        this.activity = activity;
+        this.record = record;
     }
+
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        ProgressBar progressBar=(ProgressBar) activity.findViewById(R.id.main_progress_bar);
+        ProgressBar progressBar = (ProgressBar) activity.findViewById(R.id.main_progress_bar);
         progressBar.setVisibility(View.VISIBLE);
         progressBar.setProgress(START_PROGRESS);
     }
@@ -93,20 +96,21 @@ abstract class DatabaseAsyncTask extends AsyncTask<String,Integer,Integer> {
 
     @Override
     protected void onProgressUpdate(Integer... values) {
-        ProgressBar progressBar=(ProgressBar) activity.findViewById(R.id.main_progress_bar);
+        ProgressBar progressBar = (ProgressBar) activity.findViewById(R.id.main_progress_bar);
         progressBar.setMax(values[1]);
         progressBar.setProgress(values[0]);
     }
+
     //Use  print mysql_insert_id(); in php file return id
-    void insertRecordToDatabase(Record record){
-        conncetToPhpScript(record, INSERT_PHP_URL,true);
+    void insertRecordToDatabase(Record record) {
+        conncetToPhpScript(record, INSERT_PHP_URL, true);
     }
 
-    void updateRecordToDatabase(Record record){
-        conncetToPhpScript(record,UPDATE_PHP_URL,false);
+    void updateRecordToDatabase(Record record) {
+        conncetToPhpScript(record, UPDATE_PHP_URL, false);
     }
 
-    private void conncetToPhpScript(Record record,String Url,boolean isInsert) {
+    private void conncetToPhpScript(Record record, String Url, boolean isInsert) {
         //Random random = new Random();
         URL url = null;
         try {
@@ -181,48 +185,46 @@ abstract class DatabaseAsyncTask extends AsyncTask<String,Integer,Integer> {
     }
 
 
-
-
-    private String getQuery(Record record) throws UnsupportedEncodingException{
-        StringBuffer sb=new StringBuffer();
+    private String getQuery(Record record) throws UnsupportedEncodingException {
+        StringBuffer sb = new StringBuffer();
         sb.append(URLEncoder.encode(Record.ID, UTF_8));
         sb.append(EQUAL_MARK);
-        sb.append(URLEncoder.encode(record.getId(),UTF_8));
+        sb.append(URLEncoder.encode(record.getId(), UTF_8));
         sb.append(AND_MARK);
 
         sb.append(URLEncoder.encode(Record.TITLE_NAME, UTF_8));
         sb.append(EQUAL_MARK);
-        sb.append(URLEncoder.encode(record.getName(),UTF_8));
+        sb.append(URLEncoder.encode(record.getName(), UTF_8));
         sb.append(AND_MARK);
 
         sb.append(URLEncoder.encode(Record.TITLE_TIME, UTF_8));
         sb.append(EQUAL_MARK);
-        sb.append(URLEncoder.encode(record.getTime(),UTF_8));
+        sb.append(URLEncoder.encode(record.getTime(), UTF_8));
         sb.append(AND_MARK);
 
         sb.append(URLEncoder.encode(Record.TITLE_IS_PEED, UTF_8));
         sb.append(EQUAL_MARK);
-        sb.append(URLEncoder.encode(record.isPeed()? STRING_TRUE : STRING_FALSE,UTF_8));
+        sb.append(URLEncoder.encode(record.isPeed() ? STRING_TRUE : STRING_FALSE, UTF_8));
         sb.append(AND_MARK);
 
         sb.append(URLEncoder.encode(Record.TITLE_IS_POOPED, UTF_8));
         sb.append(EQUAL_MARK);
-        sb.append(URLEncoder.encode(record.isPooped()? STRING_TRUE : STRING_FALSE,UTF_8));
+        sb.append(URLEncoder.encode(record.isPooped() ? STRING_TRUE : STRING_FALSE, UTF_8));
         sb.append(AND_MARK);
 
         sb.append(URLEncoder.encode(Record.TITLE_IS_PEED_INSIDE, UTF_8));
         sb.append(EQUAL_MARK);
-        sb.append(URLEncoder.encode(record.isPeedInside()? STRING_TRUE : STRING_FALSE,UTF_8));
+        sb.append(URLEncoder.encode(record.isPeedInside() ? STRING_TRUE : STRING_FALSE, UTF_8));
         sb.append(AND_MARK);
 
         sb.append(URLEncoder.encode(Record.TITLE_IS_POOPED_INSIDE, UTF_8));
         sb.append(EQUAL_MARK);
-        sb.append(URLEncoder.encode(record.isPoopedInside()? STRING_TRUE : STRING_FALSE,UTF_8));
+        sb.append(URLEncoder.encode(record.isPoopedInside() ? STRING_TRUE : STRING_FALSE, UTF_8));
         sb.append(AND_MARK);
 
         sb.append(URLEncoder.encode(Record.TITLE_IS_ATE, UTF_8));
         sb.append(EQUAL_MARK);
-        sb.append(URLEncoder.encode(record.isAte()? STRING_TRUE : STRING_FALSE,UTF_8));
+        sb.append(URLEncoder.encode(record.isAte() ? STRING_TRUE : STRING_FALSE, UTF_8));
         sb.append(AND_MARK);
 
 //        sb.append(URLEncoder.encode(Record.TITLE_SPOUSE_TIME, UTF_8));
@@ -232,7 +234,7 @@ abstract class DatabaseAsyncTask extends AsyncTask<String,Integer,Integer> {
 
         sb.append(URLEncoder.encode(Record.TITLE_DATE, UTF_8));
         sb.append(EQUAL_MARK);
-        sb.append(URLEncoder.encode(record.getDate(),UTF_8));
+        sb.append(URLEncoder.encode(record.getDate(), UTF_8));
         //sb.append(AND_MARK);
 
         return sb.toString();
@@ -240,26 +242,51 @@ abstract class DatabaseAsyncTask extends AsyncTask<String,Integer,Integer> {
 
 
     ArrayList<Record> getFutureRecords(Record lastRecord) {
-        ArrayList<Record> recordsList= new ArrayList<>(NUMBER_OF_ITEM_FOR_FUTURE);
-        for(int i=0;i<4;i++){
-            Record newRecord=new Record(lastRecord);
+        ArrayList<Record> recordsList = new ArrayList<>(NUMBER_OF_ITEM_FOR_FUTURE);
+        for (int i = 0; i < 4; i++) {
+            Record newRecord = new Record(lastRecord);
             recordsList.add(newRecord);
-            lastRecord=newRecord;
+            lastRecord = newRecord;
         }
 
         return recordsList;
     }
 
+    Map<String, Integer> getStatisticDate() {
+        Map<String, Integer> statisticMap = null;
+        JSONObject jsonObject;
+        String result = getResultFromUrl(GET_STATISTIC_URL);
+
+        try {
+            jsonObject = new JSONObject(result);
+            //Log.d(TAG,"--------------------------"+jsonObject.getString("time")+"-------------------------");
+            statisticMap = turnJSONToMap(jsonObject);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return statisticMap;
+    }
+
+    private Map<String, Integer> turnJSONToMap(JSONObject jsonObject) throws JSONException {
+        Map<String, Integer> map = new LinkedHashMap<>();
+        for (int i = jsonObject.length(); i > 0; i--) {
+            JSONObject newJson = (JSONObject) jsonObject.get(String.valueOf(i));
+            map.put(newJson.getString("name"), newJson.getInt("totalNumber"));
+        }
+        return map;
+    }
+
     Collection<? extends Record> getRecordsFromDatabase() {
         JSONObject jsonObject;
-        ArrayList<Record> recordArrayList=null;
-        String result=getResultFromUrl(GET_INITIAL_URL);
+        ArrayList<Record> recordArrayList = null;
+        String result = getResultFromUrl(GET_INITIAL_URL);
         //Convert it to JSON
 
         try {
-            jsonObject=new JSONObject(result);
+            jsonObject = new JSONObject(result);
             //Log.d(TAG,"--------------------------"+jsonObject.getString("time")+"-------------------------");
-            recordArrayList=turnJSONToArray(jsonObject);
+            recordArrayList = turnJSONToArray(jsonObject);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -268,50 +295,52 @@ abstract class DatabaseAsyncTask extends AsyncTask<String,Integer,Integer> {
     }
 
     private String getResultFromUrl(String getInitialUrl) {
-        URL url=null;
-        HttpURLConnection connection=null;
-        String result="";
+        URL url = null;
+        HttpURLConnection connection = null;
+        String result = "";
         String line;
         try {
-            url=new URL(getInitialUrl);
+            url = new URL(getInitialUrl);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
         try {
-            if (url==null) throw new NullPointerException();
-            connection=(HttpURLConnection)url.openConnection();
+            if (url == null) throw new NullPointerException();
+            connection = (HttpURLConnection) url.openConnection();
 
-            InputStream inputStream=new BufferedInputStream(connection.getInputStream());
+            InputStream inputStream = new BufferedInputStream(connection.getInputStream());
             //Start to read the content
-            BufferedReader bufferedReader=new BufferedReader(new InputStreamReader(inputStream));
-            StringBuilder sb=new StringBuilder();
-            while ((line=bufferedReader.readLine())!=null){
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            StringBuilder sb = new StringBuilder();
+            while ((line = bufferedReader.readLine()) != null) {
                 sb.append(line).append("\n");
             }
             inputStream.close();
-            result=sb.toString();
+            result = sb.toString();
         } catch (IOException | NullPointerException e) {
             e.printStackTrace();
-        } finally{if (connection!=null) connection.disconnect();}
+        } finally {
+            if (connection != null) connection.disconnect();
+        }
         return result;
     }
 
     private ArrayList<Record> turnJSONToArray(JSONObject jsonObject) throws JSONException {
-        ArrayList<Record> newRecordArrayList=new ArrayList<>();
+        ArrayList<Record> newRecordArrayList = new ArrayList<>();
 
-        for (int i=jsonObject.length(); i>0; i--){
-            Record record=new Record();
-            JSONObject newJson=(JSONObject) jsonObject.get(String.valueOf(i));
+        for (int i = jsonObject.length(); i > 0; i--) {
+            Record record = new Record();
+            JSONObject newJson = (JSONObject) jsonObject.get(String.valueOf(i));
             record.setId(newJson.getString(Record.ID));
             record.setTime(newJson.getString(Record.TITLE_TIME));
             record.setDate(newJson.getString(Record.TITLE_DATE));
 //            record.setSpouseTime(newJson.getString(Record.TITLE_SPOUSE_TIME));
             record.setName(newJson.getString(Record.TITLE_NAME));
-            record.setPeed(newJson.getInt(Record.TITLE_IS_PEED)==INT_TRUE);
-            record.setPooped(newJson.getInt(Record.TITLE_IS_POOPED)==INT_TRUE);
-            record.setAte(newJson.getInt(Record.TITLE_IS_ATE)==INT_TRUE);
-            record.setPeedInside(newJson.getInt(Record.TITLE_IS_PEED_INSIDE)==INT_TRUE);
-            record.setPoopedInside(newJson.getInt(Record.TITLE_IS_POOPED_INSIDE)==INT_TRUE);
+            record.setPeed(newJson.getInt(Record.TITLE_IS_PEED) == INT_TRUE);
+            record.setPooped(newJson.getInt(Record.TITLE_IS_POOPED) == INT_TRUE);
+            record.setAte(newJson.getInt(Record.TITLE_IS_ATE) == INT_TRUE);
+            record.setPeedInside(newJson.getInt(Record.TITLE_IS_PEED_INSIDE) == INT_TRUE);
+            record.setPoopedInside(newJson.getInt(Record.TITLE_IS_POOPED_INSIDE) == INT_TRUE);
             newRecordArrayList.add(record);
         }
 
@@ -319,15 +348,15 @@ abstract class DatabaseAsyncTask extends AsyncTask<String,Integer,Integer> {
     }
 
     private void showSnackbar() {
-        Snackbar.make(activity.findViewById(R.id.activity_main),getMessage(),Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(activity.findViewById(R.id.activity_main), getMessage(), Snackbar.LENGTH_SHORT).show();
     }
 
     public void setShowSnackbar(boolean showSnackbar) {
         isShowSnackbar = showSnackbar;
     }
 /**
-    private void testSleep(){
-        SystemClock.sleep(500);
-    }
+ private void testSleep(){
+ SystemClock.sleep(500);
+ }
  **/
 }
